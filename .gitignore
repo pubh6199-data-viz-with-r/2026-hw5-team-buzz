@@ -1,0 +1,30 @@
+# Note: if your data file is very large you may have to omit data folder in order to push to GitHub
+# data/
+
+# R and RStudio
+.Rhistory
+.Rapp.history
+.RData
+.Rproj.user/
+*.Rproj
+
+# Quarto
+_quarto/
+_cache/
+*.nb.html
+
+# Shiny logs
+*.log
+
+# System files
+.DS_Store
+Thumbs.db
+
+# Output
+# NOTE: Do NOT ignore docs/, it's needed for GitHub Pages!
+
+# Personal
+*.env
+
+/.quarto/
+.positai

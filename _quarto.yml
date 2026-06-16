@@ -1,0 +1,11 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "PUBH 6199, Summer 2026"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Final project write-up
+      
