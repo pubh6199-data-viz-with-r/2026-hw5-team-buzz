@@ -48,7 +48,7 @@ _Describe your data source(s), including where it came from, the key variables, 
 # Load libraries and data
 library(tidyverse)
 
-data <- read_csv("data/my_data.csv")
+data <- read_csv("data/SF_NPL_data.csv")
 glimpse(data)
 ```   
 
