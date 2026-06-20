@@ -18,7 +18,7 @@
     "href": "index.html#data",
     "title": "Final Project: [YOUR TITLE HERE]",
     "section": "Data",
-    "text": "Data\nDescribe your data source(s), including where it came from, the key variables, and any pre-processing steps.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\ndata &lt;- read_csv(\"data/my_data.csv\")\nglimpse(data)"
+    "text": "Data\nDescribe your data source(s), including where it came from, the key variables, and any pre-processing steps.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\ndata &lt;- read_csv(\"data/SF_NPL_data.csv\")\nglimpse(data)"
   },
   {
     "objectID": "index.html#visualizatiob-1-title-here",
