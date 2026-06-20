@@ -51,10 +51,12 @@ library(stringr)
 fire_counties <- fire_counties %>%
   mutate(NAME = str_remove(NAME, ",.*")) %>%
   mutate(NAME = toupper(NAME)) %>%
-  mutate(NAME = str_remove(NAME, " COUNTY"))
+  mutate(NAME = str_remove(NAME, " COUNTY")) %>%
+  mutate(COUNTYFP = as.character(COUNTYFP))
 
 #Checking revisions were done correctly
 view(fire_counties)
+class(fire_counties$COUNTYFP)
 
 
 #Importing county shapefiles
@@ -72,16 +74,21 @@ options(tigris_use_cache = TRUE)
 
 #assigning counties to a dataframe
 counties <- tigris::counties(cb = TRUE, year = 2025) 
-#changing county names to all upper case
+#changing county names to all upper case and removing VI
 counties <- counties %>%
-  mutate(NAME = toupper(NAME)) 
+  filter(!STATEFP %in% "78") %>%
+  mutate(NAME = toupper(NAME))
+ 
 
 #Checking rename was correct
-head(counties)
+
+view(counties)
 
 #Left join of fire and county shapefiles 
 counties_fire_map <- counties %>%
-  left_join(fire_counties, by = ("NAME" = "NAME"))
+  filter(!STATEFP %in% "78") %>%
+  left_join(fire_counties, by = ("GEOIDFQ" = "GEOIDFQ"))
+
 
 #Checking join 
 view(counties_fire_map)
