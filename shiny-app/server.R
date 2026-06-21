@@ -2,39 +2,60 @@
 server <- function(input, output, session) {
   
   # Create the base map
-  output$map <- renderLeaflet({
-    leaflet() %>%
-      addProviderTiles(providers$CartoDB.Positron) %>%
-      setView(lng = -98.5795, lat = 39.8283, zoom = 4)
-  })
+output$map <- renderLeaflet({
+  leaflet() %>%
+    addProviderTiles(providers$CartoDB.Positron) %>%
+    addMapPane("polygonPane", zIndex = 410) %>%
+    addMapPane("pointPane", zIndex = 420) %>%
+    setView(lng = -98.5795, lat = 39.8283, zoom = 4)
+})
   
   # Observe fire risk layer toggle
-  observe({
-    if (input$show_fire_risk) {
-      # Add fire risk choropleth layer
-      # Note: This example assumes you have polygon geometries in fire_risk_data
-      # Adjust based on your actual data structure
+    observe({
+      if (input$show_fire_risk) {
+        # Create breaks in increments of 0.2
+        min_risk <- floor(min(counties_fire_map$RISK_NATIONAL_RANK, na.rm = TRUE) * 5) / 5
+        max_risk <- ceiling(max(counties_fire_map$RISK_NATIONAL_RANK, na.rm = TRUE) * 5) / 5
+        breaks <- seq(min_risk, max_risk, by = 0.2)
+ 
+      # Explicitly define color palette for fire risk
+        breaks <- seq(0, 1, by = 0.2)
+        pal <- colorBin(
+          palette = c("#FFFFB2", "#FEB24C", "#FD8D3C", "#FC4E2A", "#B10026"),
+          domain = c(0, 1),
+          bins = breaks,
+          na.color = "#E0E0E0"
+        )
       
+      # Add fire risk choropleth layer
       leafletProxy("map") %>%
         clearGroup("fire_risk") %>%
         addPolygons(
-          data = fire_risk_data,
-          fillColor = ~risk_palette(risk_level),
+          data = counties_fire_map,
+          fillColor = ~pal(RISK_NATIONAL_RANK),
           fillOpacity = 0.6,
           color = "#BDBDC3",
           weight = 1,
           group = "fire_risk",
           popup = ~paste0(
-            "<strong>Region:</strong> ", region, "<br>",
-            "<strong>Risk Level:</strong> ", risk_level
+            "<strong>County:</strong> ", NAME.y, "<br>",
+            "<strong>State:</strong> ", STATE_NAME.y, "<br>",
+            "<strong>Risk Score:</strong> ", round(RISK_NATIONAL_RANK, 2), "<br>"
+          ),
+          highlightOptions = highlightOptions(
+            weight = 2,
+            color = "#666",
+            fillOpacity = 0.7,
+            bringToFront = TRUE
           )
         ) %>%
         addLegend(
           position = "bottomright",
-          pal = risk_palette,
-          values = fire_risk_data$risk_level,
-          title = "Fire Risk Level",
-          layerId = "fire_risk_legend"
+          pal = pal,
+          values = counties_fire_map$RISK_NATIONAL_RANK,
+          title = "Fire Risk Score",
+          layerId = "fire_risk_legend",
+          na.label = "No Data"
         )
     } else {
       leafletProxy("map") %>%
@@ -43,3 +64,33 @@ server <- function(input, output, session) {
     }
   })
   
+  # Observe superfund sites layer toggle
+  observe({
+    if (input$show_superfund) {
+      # Add superfund sites as markers
+      leafletProxy("map") %>%
+        clearGroup("superfund") %>%
+        addCircleMarkers(
+          data = sfdata,
+          lng = ~Longitude,
+          lat = ~Latitude,
+          radius = 4,
+          color = "#0066CC",
+          fillColor = "#3399FF",
+          fillOpacity = 0.8,
+          weight = 2,
+          group = "superfund",
+          popup = ~paste0(
+            "<strong>Site:</strong> ", Site_Name, "<br>",
+            "<strong>County:</strong> ", County, "<br>",
+            "<strong>State:</strong> ", State, "<br>",
+            "<strong>Media Types:</strong> ", Media_Types, "<br>",
+            "<strong>NPL Status:</strong> ", NPL_Status
+          )
+        )
+    } else {
+      leafletProxy("map") %>%
+        clearGroup("superfund")
+    }
+  })
+}
