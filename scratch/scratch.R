@@ -1,5 +1,5 @@
 # optional, save your exploration code here
-data <- read_csv("data/SF_NPL_data.csv")%>%
+sfdata <- read_csv("data/SF_NPL_data.csv")%>%
     #filter by NPL Status and Decision Document
    filter(NPL_Status %in% "Currently on the Final NPL")%>%
    filter(Decision_Document_Type %in% "Record of Decision") %>%
@@ -23,6 +23,7 @@ data <- read_csv("data/SF_NPL_data.csv")%>%
       TRUE ~ 0
       )
     )
+
 
 
 
@@ -86,8 +87,12 @@ view(counties)
 
 #Left join of fire and county shapefiles 
 counties_fire_map <- counties %>%
-  filter(!STATEFP %in% "78") %>%
   left_join(fire_counties, by = ("GEOIDFQ" = "GEOIDFQ"))
+
+#Left join of counties_fire_map and sfdata
+sf_fire_map <- counties_fire_map %>%
+  left_join(sfdata, by = c("NAME.y" = "County"))
+
 
 
 #Checking join 
@@ -96,6 +101,7 @@ view(counties_fire_map)
 #First check of spatial join
 tm_shape(counties_fire_map) +
   tm_polygons("RISK_NATIONAL_RANK", palette = "Oranges", title = "Fire Risk by County")
+
 
 
 
