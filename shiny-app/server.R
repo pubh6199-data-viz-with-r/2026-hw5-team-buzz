@@ -37,6 +37,7 @@ output$map <- renderLeaflet({
           color = "#BDBDC3",
           weight = 1,
           group = "fire_risk",
+          options = pathOptions(pane = "polygonPane"),,
           popup = ~paste0(
             "<strong>County:</strong> ", NAME.y, "<br>",
             "<strong>State:</strong> ", STATE_NAME.y, "<br>",
@@ -70,22 +71,22 @@ output$map <- renderLeaflet({
       # Add superfund sites as markers
       leafletProxy("map") %>%
         clearGroup("superfund") %>%
-        addCircleMarkers(
+         addCircleMarkers(
           data = sfdata,
           lng = ~Longitude,
           lat = ~Latitude,
-          radius = 4,
+          radius = 5,
           color = "#0066CC",
           fillColor = "#3399FF",
           fillOpacity = 0.8,
           weight = 2,
           group = "superfund",
+          options = pathOptions(pane = "pointPane"),
           popup = ~paste0(
             "<strong>Site:</strong> ", Site_Name, "<br>",
-            "<strong>County:</strong> ", County, "<br>",
-            "<strong>State:</strong> ", State, "<br>",
-            "<strong>Media Types:</strong> ", Media_Types, "<br>",
-            "<strong>NPL Status:</strong> ", NPL_Status
+            #"<strong>County:</strong> ", County, "<br>",
+            #"<strong>State:</strong> ", State, "<br>",
+            "<strong>Contamination Type:</strong> ", Media_Types, "<br>"
           )
         )
     } else {
