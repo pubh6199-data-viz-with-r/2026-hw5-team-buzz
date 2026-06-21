@@ -101,18 +101,6 @@ tm_shape(counties_fire_map, bbox = st_bbox(counties_fire_map)) +
   tm_polygons("RISK_NATIONAL_RANK", palette = "Oranges", title = "Fire Risk by County")
 
 
-
-# developing leaflet app
-
-
-
-
-
-
-
-
-
-
 #Obtaining decennial census data - Still WIP 
 
 #add census api key 
@@ -136,11 +124,43 @@ decennial_data <- get_decennial(geography = "county",
 view(decennial_data)
 
 
-counties_fire_map_pop <- counties_fire_map %>%
+counties_fire_map <- counties_fire_map %>%
   left_join(decennial_data, by = c("GEOID.x" = "GEOID"))
 
-view(counties_fire_map_pop)
+view(counties_fire_map)
 
 
 tm_shape(counties_fire_map_pop, bbox = st_bbox(counties_fire_map_pop)) +
   tm_polygons("value", palette = "Oranges", title = "Population by County")
+
+
+
+
+
+# PLOT 2 WORK 
+
+#Reading in data to sf_data frame
+sf_data <-  read_csv("shiny-app/app-data/sfdata_clean.csv")
+view(sf_data)
+
+#grouping to create table with just county, region, state, and count
+sf_data_bycounty <-sf_data %>%
+  group_by(County, Region, State) %>%
+  summarise(sf_count = n()) %>%
+  ungroup()
+
+#Arranging descending
+sf_data_bycounty %>%
+  arrange(desc(sf_count))
+
+#Left Join 
+counties_fire_sf <- sf_data_bycounty %>%
+  left_join(counties_fire_map, by = c("County" = "NAME.x", "State" = "STUSPS.x"))
+
+view(counties_fire_sf)
+
+
+#sf_fire_map <- counties_fire_map %>%
+#left_join(sfdata, by = c("NAME.y" = "County"))
+
+
