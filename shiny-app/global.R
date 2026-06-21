@@ -75,5 +75,5 @@ counties_fire_map <- counties %>%
   left_join(fire_counties, by = ("GEOIDFQ" = "GEOIDFQ"))
 
 #Left join of counties_fire_map and sfdata
-sf_fire_map <- counties_fire_map %>%
-  left_join(sfdata, by = c("NAME.y" = "County"))
+#sf_fire_map <- counties_fire_map %>%
+  #left_join(sfdata, by = c("NAME.y" = "County"))
