@@ -31,17 +31,7 @@ sfdata <- read_csv("app-data/SF_NPL_data.csv")%>%
   distinct(Latitude, Longitude, .keep_all = TRUE)%>%
   
   #remove rows with missing county name 
-  drop_na(County)%>%
-  
-  #Make a new column that categorizes the media type of interest numerically
-  mutate(Media_int = case_when(
-    str_detect(Media_Types,"Building/Structure") &
-      str_detect(Media_Types, "Debris") ~ 3,
-    str_detect(Media_Types, "Buildings/Structures") ~ 1,
-    str_detect(Media_Types, "Debris") ~ 2,
-    TRUE ~ 0
-  )
-  )
+  drop_na(County)
 
 #Importing fire data
 
@@ -73,6 +63,8 @@ counties <- counties %>%
 #Left join of fire and county shapefiles 
 counties_fire_map <- counties %>%
   left_join(fire_counties, by = ("GEOIDFQ" = "GEOIDFQ"))
+
+counties_fire_map <- st_transform(counties_fire_map, crs = 4326)
 
 #Left join of counties_fire_map and sfdata
 
