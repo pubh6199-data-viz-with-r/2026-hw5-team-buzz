@@ -73,12 +73,10 @@ library(leaflet)
 
 options(tigris_use_cache = TRUE)
 
-#assigning counties to a dataframe
-counties <- tigris::counties(cb = TRUE, year = 2025) 
-#changing county names to all upper case and removing VI
-counties <- counties %>%
-  filter(!STATEFP %in% "78") %>%
-  mutate(NAME = toupper(NAME))
+#assigning counties to a dataframe, removing VI and mutating names
+counties <- tigris::counties(cb = TRUE, year = 2025) %>%
+  filter(STATEFP != "78") %>%
+  mutate(NAME =toupper(NAME))
  
 
 #Checking rename was correct
@@ -89,18 +87,28 @@ view(counties)
 counties_fire_map <- counties %>%
   left_join(fire_counties, by = ("GEOIDFQ" = "GEOIDFQ"))
 
-#Left join of counties_fire_map and sfdata
-sf_fire_map <- counties_fire_map %>%
-  left_join(sfdata, by = c("NAME.y" = "County"))
 
+#Left join of counties_fire_map and sfdata
+#sf_fire_map <- counties_fire_map %>%
+ # left_join(sfdata, by = c("NAME.y" = "County"))
 
 
 #Checking join 
 view(counties_fire_map)
 
 #First check of spatial join
-tm_shape(counties_fire_map) +
+tm_shape(counties_fire_map, bbox = st_bbox(counties_fire_map)) +
   tm_polygons("RISK_NATIONAL_RANK", palette = "Oranges", title = "Fire Risk by County")
+
+
+
+# developing leaflet app
+
+
+
+
+
+
 
 
 
@@ -127,3 +135,12 @@ decennial_data <- get_decennial(geography = "county",
 
 view(decennial_data)
 
+
+counties_fire_map_pop <- counties_fire_map %>%
+  left_join(decennial_data, by = c("GEOID.x" = "GEOID"))
+
+view(counties_fire_map_pop)
+
+
+tm_shape(counties_fire_map_pop, bbox = st_bbox(counties_fire_map_pop)) +
+  tm_polygons("value", palette = "Oranges", title = "Population by County")

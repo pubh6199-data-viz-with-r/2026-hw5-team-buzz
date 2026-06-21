@@ -77,3 +77,31 @@ counties_fire_map <- counties %>%
 #Left join of counties_fire_map and sfdata
 sf_fire_map <- counties_fire_map %>%
   left_join(sfdata, by = c("NAME.y" = "County"))
+
+
+#add census api key 
+census_api_key("d8e70ec497afa3b6b418a25584fa0ced9492fb59", install = TRUE, overwrite = TRUE)
+readRenviron("~/.Renviron")
+
+#Downloading county data for 2020
+census_variables <- load_variables(year = 2020, dataset = "pl")
+View(census_variables)
+
+#Creating decennial data frame
+options(tigris_use_cache = TRUE)
+decennial_data <- get_decennial(geography = "county",
+                                year = "2020",
+                                variables = "P1_001N", ,
+                                geometry = FALSE,
+                                show_progress = FALSE)
+
+#Joining population data to counties fire map
+counties_fire_map <- counties_fire_map %>%
+  left_join(decennial_data, by = c("GEOID.x" = "GEOID"))
+
+#Mapping population 
+tm_shape(counties_fire_map, bbox = st_bbox(counties_fire_map_pop)) +
+  tm_polygons("value", palette = "Oranges", title = "Population by County")
+
+
+
