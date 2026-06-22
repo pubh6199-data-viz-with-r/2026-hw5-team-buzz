@@ -1,13 +1,14 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/jEmP5upM)
-# Final Project: [Insert Project Title]
+# Final Project: Exploration of Fire Risk around Superfund Sites 
 
-Authors: [Your Full Name]  
+Authors: Abby Schmitt and Sharon Hertzel  
 Course: PUBH 6199 – Visualizing Data with R  
-Date: [Insert Date]
+Date: 6/21/2026
 
 ## 🔍 Project Overview
 
 [Write 2–3 sentences about your topic and what your project aims to explore or visualize.]
+
 
 ## 📊 Final Write-up
 
