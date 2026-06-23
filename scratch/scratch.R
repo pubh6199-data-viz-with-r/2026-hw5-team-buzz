@@ -291,7 +291,7 @@ counties_fire_sf_clean <- counties_fire_sf
 counties_fire_sf_clean$RISK_NATIONAL_RANK[157] <- 0.06
 
 #Confirm remaining NA values are for islands which are not included in fire dataset; leave for SF data set completeness
-view(counties_fire_sf_clean)
+View(counties_fire_sf_clean)
 
 
 #Simple Scatter 
