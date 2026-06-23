@@ -37,6 +37,7 @@ output$map <- renderLeaflet({
           color = "#BDBDC3",
           weight = 1,
           group = "fire_risk",
+          options = pathOptions(pane = "polygonPane"),,
           popup = ~paste0(
             "<strong>County:</strong> ", NAME.y, "<br>",
             "<strong>State:</strong> ", STATE_NAME.y, "<br>",
@@ -70,27 +71,63 @@ output$map <- renderLeaflet({
       # Add superfund sites as markers
       leafletProxy("map") %>%
         clearGroup("superfund") %>%
-        addCircleMarkers(
+         addCircleMarkers(
           data = sfdata,
           lng = ~Longitude,
           lat = ~Latitude,
-          radius = 4,
+          radius = 5,
           color = "#0066CC",
           fillColor = "#3399FF",
           fillOpacity = 0.8,
           weight = 2,
           group = "superfund",
+          options = pathOptions(pane = "pointPane"),
           popup = ~paste0(
             "<strong>Site:</strong> ", Site_Name, "<br>",
-            "<strong>County:</strong> ", County, "<br>",
-            "<strong>State:</strong> ", State, "<br>",
-            "<strong>Media Types:</strong> ", Media_Types, "<br>",
-            "<strong>NPL Status:</strong> ", NPL_Status
+            #"<strong>County:</strong> ", County, "<br>",
+            #"<strong>State:</strong> ", State, "<br>",
+            "<strong>Contamination Type:</strong> ", Media_Types, "<br>"
           )
         )
     } else {
       leafletProxy("map") %>%
         clearGroup("superfund")
     }
+  })
+ 
+  observeEvent(input$epa_region, {
+    if (input$epa_region == "") {
+      # If no region selected, show all states or empty
+      updateSelectInput(session, "state", 
+                        choices = c("None" = ""),
+                        selected = "")
+    } else {
+      # Get states for the selected EPA region
+      states_in_region <- epa_regions[[input$epa_region]]
+      
+      updateSelectInput(session, "state",
+                        choices = c("None" = "", states_in_region),
+                        selected = "")
+    }
+  }) 
+  
+  # Render the boxplot
+  output$risk_boxplot <- renderPlot({
+    ggplot(counties_fire_sf_clean, 
+           aes(x = fct_reorder(Region, RISK_NATIONAL_RANK), 
+               y = RISK_NATIONAL_RANK, 
+               group = Region)) +
+      geom_boxplot(outlier.shape = NA) +
+      geom_jitter(width = 0.2, alpha = 0.5) +
+      theme_classic() +
+      labs(
+        x = "EPA Region",
+        y = "Risk National Rank",
+        title = "Distribution of Fire Risk Rankings by Region"
+      ) +
+      theme(
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(size = 14, face = "bold")
+      )
   })
 }
