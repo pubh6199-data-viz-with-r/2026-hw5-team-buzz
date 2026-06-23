@@ -1,18 +1,32 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/jEmP5upM)
 # Final Project: Exploration of Fire Risk around Superfund Sites 
 
-Authors: Abby Schmitt and Sharon Hertzel  
+Authors: Abby Schmitt and Sharon Hertzell  
 Course: PUBH 6199 – Visualizing Data with R  
 Date: 6/21/2026
 
 ## 🔍 Project Overview
 
-[Write 2–3 sentences about your topic and what your project aims to explore or visualize.]
-
+Wildfire risk across the US is increasing due to climate change, with some regions facing disproportionately high exposure. 
+Superfund sites in these high-risk areas are especially concerning, as wildfires can combust toxic chemicals and spread contamination into the surrounding atmosphere. 
+This app aims to visualize the relationship between wildfire risk and Superfund site distribution to highlight where remediation strategies should account for fire risk.
 
 ## 📊 Final Write-up
 
 The final write-up, including code and interpretation of the visualizations, is available here:
+
+Visualization 1: This is a map layering Superfund sites on top of a choropleth map of wildfire risk by county. 
+The western region of the US has a higher number of high fire risk counties than the Eastern and Midwestern US. 
+When the Superfund layer is turned on you can zoom in and see that there are many sites that are located in a high fire risk county. 
+
+Visualization 2: A key takeaway from this graph is that there is an unequal level of fire risk compared by EPA region. 
+Region 5 has the lowest overall rank around 0.15 while Region 9 has the highest overall rank around 0.90. Region 4 
+has the most an even distribution of risk by county ranging from 0.2 to 1. 
+
+Visualization 3:
+
+Data Sources: 
+
 
 👉 [**View the write-up website**](https://pubh6199-data-viz-with-r.github.io/hw6-YOUR-TEAM-NAME/)
 
