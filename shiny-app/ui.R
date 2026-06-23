@@ -59,7 +59,12 @@ ui <- fluidPage(
         column(
           width = 5,
           h4("Fire Risk National Rank by Region"),
-          plotOutput("risk_boxplot", height = "550px")
+          plotOutput("risk_boxplot", height = "400px")
+        ),
+        column(
+          width = 5, 
+          h5("Media Distribution by Region"),
+          img(src ="84ea0001-b339-49e4-a4fb-4f95eb72a760.png", width = "100%", height = "400px", alt = "Placeholder Image")
         )
       )
     )

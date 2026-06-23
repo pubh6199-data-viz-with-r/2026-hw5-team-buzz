@@ -491,7 +491,9 @@ library(forcats)
 
 ggplot(sf_R9_media_type_count_long, aes(x = fct_reorder(MediaTypes, Counts), y = Counts)) +
   geom_col() +
-  coord_flip()
+  coord_flip()+
+  labs(title = "Media Types at High Fire Risk Sites - Region 9", x = "Media Types")+
+  theme_classic()
 
 
 #Exploring R4
