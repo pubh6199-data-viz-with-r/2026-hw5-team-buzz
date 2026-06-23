@@ -158,14 +158,14 @@ counties_fire_sf_clean$RISK_NATIONAL_RANK[157] <- 0.06
 # EPA Region mapping
 epa_regions <- list(
   "Region 1 - New England" = c("CT", "ME", "MA", "NH", "RI", "VT"),
-  "Region 2 - New York/New Jersey" = c("NJ", "NY", "PR", "VI"),
+  "Region 2 - New York/New Jersey" = c("NJ", "NY", "PR"),
   "Region 3 - Mid-Atlantic" = c("DE", "DC", "MD", "PA", "VA", "WV"),
   "Region 4 - Southeast" = c("AL", "FL", "GA", "KY", "MS", "NC", "SC", "TN"),
   "Region 5 - Great Lakes" = c("IL", "IN", "MI", "MN", "OH", "WI"),
   "Region 6 - South Central" = c("AR", "LA", "NM", "OK", "TX"),
   "Region 7 - Midwest" = c("IA", "KS", "MO", "NE"),
   "Region 8 - Mountains & Plains" = c("CO", "MT", "ND", "SD", "UT", "WY"),
-  "Region 9 - Pacific Southwest" = c("AZ", "CA", "HI", "NV", "AS", "GU"),
+  "Region 9 - Pacific Southwest" = c("AZ", "CA", "HI", "NV"),
   "Region 10 - Pacific Northwest" = c("AK", "ID", "OR", "WA")
 )
 

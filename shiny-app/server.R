@@ -94,7 +94,22 @@ output$map <- renderLeaflet({
         clearGroup("superfund")
     }
   })
-  
+ 
+  observeEvent(input$epa_region, {
+    if (input$epa_region == "") {
+      # If no region selected, show all states or empty
+      updateSelectInput(session, "state", 
+                        choices = c("None" = ""),
+                        selected = "")
+    } else {
+      # Get states for the selected EPA region
+      states_in_region <- epa_regions[[input$epa_region]]
+      
+      updateSelectInput(session, "state",
+                        choices = c("None" = "", states_in_region),
+                        selected = "")
+    }
+  }) 
   
   # Render the boxplot
   output$risk_boxplot <- renderPlot({
