@@ -31,6 +31,13 @@ ui <- fluidPage(
         selected = ""
       ),
       
+      selectInput(
+        "state",
+        "Select State:",
+        choices = c("None" = ""),
+        selected = ""
+      ),
+      
       h5("Legend"),
       p(strong("Fire Risk:"), "Counties colored from yellow (low) to red (high)"),
       p(strong("Superfund Sites:"), "Blue markers indicate NPL site locations"),
