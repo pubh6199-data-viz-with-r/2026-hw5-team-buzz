@@ -23,6 +23,14 @@ ui <- fluidPage(
       
       hr(),
       
+      h4("EPA Region Selection"),
+      selectInput(
+        "epa_region",
+        "Highlight EPA Region:",
+        choices = c("None" = "", names(epa_regions)),
+        selected = ""
+      ),
+      
       h5("Legend"),
       p(strong("Fire Risk:"), "Counties colored from yellow (low) to red (high)"),
       p(strong("Superfund Sites:"), "Blue markers indicate NPL site locations"),
@@ -36,7 +44,17 @@ ui <- fluidPage(
     
     mainPanel(
       width = 9,
-      leafletOutput("map", height = "600px")
+      fluidRow(
+        column(
+          width = 7,
+          leafletOutput("map", height = "600px")
+        ),
+        column(
+          width = 5,
+          h4("Fire Risk National Rank by Region"),
+          plotOutput("risk_boxplot", height = "550px")
+        )
+      )
     )
   )
 )

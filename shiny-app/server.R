@@ -94,4 +94,25 @@ output$map <- renderLeaflet({
         clearGroup("superfund")
     }
   })
+  
+  
+  # Render the boxplot
+  output$risk_boxplot <- renderPlot({
+    ggplot(counties_fire_sf_clean, 
+           aes(x = fct_reorder(Region, RISK_NATIONAL_RANK), 
+               y = RISK_NATIONAL_RANK, 
+               group = Region)) +
+      geom_boxplot(outlier.shape = NA) +
+      geom_jitter(width = 0.2, alpha = 0.5) +
+      theme_classic() +
+      labs(
+        x = "EPA Region",
+        y = "Risk National Rank",
+        title = "Distribution of Fire Risk Rankings by Region"
+      ) +
+      theme(
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        plot.title = element_text(size = 14, face = "bold")
+      )
+  })
 }
