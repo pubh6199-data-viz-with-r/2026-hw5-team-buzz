@@ -1,6 +1,11 @@
 # Server Logic
 server <- function(input, output, session) {
   
+  region_name_to_code <- setNames(
+    sprintf("%02d", 1:10),
+    names(epa_regions)
+  )
+  
   # Create the base map
 output$map <- renderLeaflet({
   leaflet() %>%
@@ -112,13 +117,50 @@ output$map <- renderLeaflet({
   }) 
   
   # Render the boxplot
-  output$risk_boxplot <- renderPlot({
-    ggplot(counties_fire_sf_clean, 
-           aes(x = fct_reorder(Region, RISK_NATIONAL_RANK), 
-               y = RISK_NATIONAL_RANK, 
-               group = Region)) +
-      geom_boxplot(outlier.shape = NA) +
-      geom_jitter(width = 0.2, alpha = 0.5) +
+  output$risk_boxplot <- renderPlotly({
+    current_selection <- input$epa_region
+    plot_data <- counties_fire_sf_clean
+    plot_data$Region <- fct_reorder(plot_data$Region, plot_data$RISK_NATIONAL_RANK)
+    
+    if (current_selection == "") {
+      plot_data$highlight <- "normal"
+      plot_data$alpha_val <- 1 
+    } else {
+        selected_code <- region_name_to_code[[current_selection]]
+        
+        plot_data$highlight <- ifelse(
+          as.character(plot_data$Region) == selected_code,
+          "selected", "grayed"
+        )
+        plot_data$alpha_val <- ifelse(
+          as.character(plot_data$Region) == selected_code,
+          1, 0.3
+        )
+      }
+   
+    plot_data$tooltip <- paste0(plot_data$County, ", ", plot_data$State)
+    p <- ggplot(plot_data, 
+           aes(x = Region, 
+               y = RISK_NATIONAL_RANK)) +
+      geom_boxplot(
+        aes(fill = highlight, alpha = alpha_val), 
+        outlier.shape = NA) +
+      geom_point(
+        aes(alpha = alpha_val, 
+            color = highlight, 
+            size = sf_count,
+            text = tooltip), 
+        position = position_jitter(width = 0.15, height = 0, seed = 42) 
+        ) +
+          scale_size_continuous(range = c(0.75, 3)) +
+      scale_fill_manual(
+        values = c("normal" = "steelblue", "selected" = "steelblue", "grayed" = "gray70")
+      ) +
+      scale_color_manual(
+        values = c("normal" = "black", "selected" = "black", "grayed" = "gray70")
+      ) +
+      scale_alpha_identity() +
+      guides(fill = "none", color = "none", alpha = "none") +
       theme_classic() +
       labs(
         x = "EPA Region",
@@ -127,7 +169,8 @@ output$map <- renderLeaflet({
       ) +
       theme(
         axis.text.x = element_text(angle = 45, hjust = 1),
-        plot.title = element_text(size = 14, face = "bold")
-      )
+        plot.title = element_text(size = 11, face = "bold"))
+     
+     ggplotly(p, tooltip = "text")
   })
 }

@@ -46,25 +46,36 @@ ui <- fluidPage(
       
       h5("About the Data"),
       p("Fire risk data from county-level fire dataset."),
-      p("Superfund sites are currently on the Final NPL with Record of Decision.")
+      p("Superfund sites are currently on the Final National Priorities (Superfund) List with Record of Decision.")
     ),
     
     mainPanel(
       width = 9,
       fluidRow(
         column(
-          width = 7,
-          leafletOutput("map", height = "600px")
+          width = 9,
+          leafletOutput("map", height = "500px")
         ),
+          column(
+            width = 3,
+            wellPanel(
+              p("x% of Superfund sites are in high-risk areas")
+            ),
+            wellPanel(
+              p("fact 2"),
+            )
+          )
+        ),
+      fluidRow(
         column(
-          width = 5,
+          width = 6,
           h4("Fire Risk National Rank by Region"),
-          plotOutput("risk_boxplot", height = "400px")
+          plotlyOutput("risk_boxplot", height = "350px")
         ),
         column(
-          width = 5, 
+          width =6, 
           h5("Media Distribution by Region"),
-          img(src ="84ea0001-b339-49e4-a4fb-4f95eb72a760.png", width = "100%", height = "400px", alt = "Placeholder Image")
+          img(src ="84ea0001-b339-49e4-a4fb-4f95eb72a760.png", width = "100%", height = "350px", alt = "Placeholder Image")
         )
       )
     )

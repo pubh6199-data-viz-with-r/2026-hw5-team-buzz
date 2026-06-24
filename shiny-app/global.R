@@ -3,6 +3,7 @@ install.packages("tigris")
 install.packages("leaflet")
 install.packages("tidycensus")
 install.packages("readxl")
+install.packages("plotly")
 library(tidyverse)
 library(tmap)
 library(sf)
@@ -13,6 +14,7 @@ library(dplyr)
 library(tidycensus)
 library(stringr)
 library(readxl)
+library(plotly)
 
 
 #SUPERFUND DATA CLEANING
