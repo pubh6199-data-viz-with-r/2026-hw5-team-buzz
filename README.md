@@ -23,14 +23,17 @@ Visualization 2: A key takeaway from this graph is that there is an unequal leve
 Region 5 has the lowest overall rank around 0.15 while Region 9 has the highest overall rank around 0.90. Region 4 
 has the most an even distribution of risk by county ranging from 0.2 to 1. 
 
-Visualization 3:
+Visualization 3: This barplot shows how many sites in a given state contain the top 4 contaminated media in the country. 
+These media are groundwater, soil, sediment, and surface water. These exist as different levels and can inform how a wildfire may further contaminate these sources. 
+
 
 Data Sources: Our first data source is the Superfund site National Priority List (NPL) from the EPA website. 
 This has a list of current and deleted sites as well as the location, contaminated media, and the type of contaminants found at the site.
 Cleaning this data consisted of filtering sites that are currently on the NPL list and decision document only through Record of Decision. 
 Sites that have a missing county were not considered for this analysis since we are comparing fire risk by county. 
 
-Our second data source is a wildfire risk dataset from the USDA Forest Service.  
+Our second data source is a wildfire risk dataset from the USDA Forest Service. This dataset contains the risk score on a county level as well as the GEOID on the county level. 
+This set was merged with tigris county shapefiles for mapping.  
 
 
 👉 [**View the write-up website**](https://pubh6199-data-viz-with-r.github.io/hw6-YOUR-TEAM-NAME/)

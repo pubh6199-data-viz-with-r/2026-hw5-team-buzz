@@ -59,7 +59,7 @@ ui <- fluidPage(theme = shinytheme("united"),
       p("This app was created with coding assistance from", a("Shiny Assistant", href = "https://gallery.shinyapps.io/assistant/#"), "and", a("Claude.ai", href = "claude.ai")),
     ),
     
-    
+ #Label for map    
     mainPanel(
       width = 9,
       fluidRow(
@@ -68,6 +68,7 @@ ui <- fluidPage(theme = shinytheme("united"),
           h3(strong("Superfund Site Locations and Wildfire Risk By County")),
           leafletOutput("map", height = "500px")
         ),
+ #Card with important statistics and interpretations
           column(
             width = 3,
             wellPanel(
@@ -84,18 +85,21 @@ ui <- fluidPage(theme = shinytheme("united"),
             )
           )
         ),
+ #Title and placement of boxplot
       fluidRow(
         column(
           width = 6,
           h3(strong("County Fire Risk by EPA Region")),
           plotlyOutput("risk_boxplot", height = "400px")
         ),
+ #Titel and placement of barchart
         column(
           h3(HTML("&nbsp;")),
           width =6, 
           plotOutput("media_barplot", height = "400px"),
         )
       ),
+ #Explanation of boxplot below 
       fluidRow(
         column(
           width =6,
@@ -104,6 +108,7 @@ ui <- fluidPage(theme = shinytheme("united"),
             p("EPA Regions across the country show different wildfire risk profiles. In this plot, dots represent counties, and are sized based on the number of Superfund sites found in that county.")
           )
         ),
+ #Explanation of barchart 
         column(
           width = 6,
           wellPanel(
