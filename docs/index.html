@@ -6,10 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="[YOUR NAMES]">
+<meta name="author" content="Abby Schmitt and Sharon Hartzell">
 <meta name="dcterms.date" content="2026-06-25">
 
-<title>Final Project: [YOUR TITLE HERE] – PUBH 6199, Summer 2026</title>
+<title>We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States – PUBH 6199, Summer 2026</title>
 <style>
 
 code{white-space: pre-wrap;}
@@ -4089,7 +4089,7 @@ vertical-align: -.125em;
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Final Project: [YOUR TITLE HERE]</h1>
+<h1 class="title">We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States</h1>
 </div>
 
 
@@ -4099,7 +4099,7 @@ vertical-align: -.125em;
     <div>
     <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
-             <p>[YOUR NAMES] </p>
+             <p>Abby Schmitt and Sharon Hartzell </p>
           </div>
   </div>
     
@@ -4120,7 +4120,7 @@ vertical-align: -.125em;
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p><em>Briefly introduce your topic and research question.</em></p>
+<p>As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3</p>
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
@@ -4131,8 +4131,8 @@ vertical-align: -.125em;
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load libraries and data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/SF_NPL_data.csv&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sfdata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/SF_NPL_data.csv&quot;</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sfdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -4173,11 +4173,11 @@ vertical-align: -.125em;
 </section>
 <section id="interpretation" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
-<p><em>Summarize your key findings. What do your visualizations reveal?</em></p>
+<p>Through our analysis of Superfund site wildfire risk, we found that there are substantial differences among areas of the country. By ranking EPA regions in our boxplot visualization, we were able to clearly see the differential distribution of fire risk. The Western United States generally had higher wildfire risk than other areas, with the lowest risk found in the Midwest and New England. This indicates that these regions may benefit most from proactive planning around Superfund site vulnerability. The distribution of media across the states also gives a sense of what exposure pathways researchers and risk managers might want to prioritize.</p>
 </section>
 <section id="limitations" class="level2">
 <h2 class="anchored" data-anchor-id="limitations">Limitations</h2>
-<p><em>Discuss any data quality or design limitations.</em></p>
+<p>Though several Superfund sites exist in Puerto Rico, the Virgin Islands, and Guam, the wildfire data set was not complete for these areas. This is a limitation in projecting risk for island communities.</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
@@ -4185,6 +4185,9 @@ vertical-align: -.125em;
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
+<p>https://science.nasa.gov/earth/explore/wildfires-and-climate-change/</p>
+<p>https://storymaps.arcgis.com/stories/340c1111e4d041da97d6ee23588c7b77</p>
+<p>https://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert.pdf</p>
 <p><em>Include any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else’s work, cite those too.</em></p>
 <ol type="1">
 <li>Reference 1</li>
