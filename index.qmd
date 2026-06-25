@@ -1,6 +1,6 @@
 ---
-title: "Final Project: [YOUR TITLE HERE]"
-author: "[YOUR NAMES]"
+title: "We Didn't Start the Fire: Wildfire Risk at Superfund Sites in the United States"
+author: "Abby Schmitt and Sharon Hartzell"
 date: "2026-06-25"
 params:
   number: 5
@@ -37,7 +37,7 @@ knitr::opts_chunk$set(
 
 ## Introduction
 
-_Briefly introduce your topic and research question._
+As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3
 
 ## Data
 
@@ -84,17 +84,24 @@ _If you choose to create a Shiny app, describe the app's purpose and functionali
 
 ## Interpretation
 
-_Summarize your key findings. What do your visualizations reveal?_
+Through our analysis of Superfund site wildfire risk, we found that there are substantial differences among areas of the country. By ranking EPA regions in our boxplot visualization, we were able to clearly see the differential distribution of fire risk. The Western United States generally had higher wildfire risk than other areas, with the lowest risk found in the Midwest and New England. This indicates that these regions may benefit most from proactive planning around Superfund site vulnerability. The distribution of media across the states also gives a sense of what exposure pathways researchers and risk managers might want to prioritize. 
 
 ## Limitations
 
-_Discuss any data quality or design limitations._
+Though several Superfund sites exist in Puerto Rico, the Virgin Islands, and Guam, the wildfire data set was not complete for these areas. This is a limitation in projecting risk for island communities. 
 
 ## Conclusion
 
 _Wrap up your project with a takeaway message or next steps._
 
 ## References
+
+https://science.nasa.gov/earth/explore/wildfires-and-climate-change/
+
+https://storymaps.arcgis.com/stories/340c1111e4d041da97d6ee23588c7b77
+
+https://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert.pdf
+
 
 _Include any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else's work, cite those too._
 

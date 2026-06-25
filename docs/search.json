@@ -2,78 +2,78 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "",
-    "text": "Briefly introduce your topic and research question."
+    "text": "As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3"
   },
   {
     "objectID": "index.html#introduction",
     "href": "index.html#introduction",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "",
-    "text": "Briefly introduce your topic and research question."
+    "text": "As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3"
   },
   {
     "objectID": "index.html#data",
     "href": "index.html#data",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Data",
-    "text": "Data\nDescribe your data source(s), including where it came from, the key variables, and any pre-processing steps.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\ndata &lt;- read_csv(\"data/SF_NPL_data.csv\")\nglimpse(data)"
+    "text": "Data\nDescribe your data source(s), including where it came from, the key variables, and any pre-processing steps.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\nsfdata &lt;- read_csv(\"data/SF_NPL_data.csv\")\nglimpse(sfdata)"
   },
   {
     "objectID": "index.html#visualizatiob-1-title-here",
     "href": "index.html#visualizatiob-1-title-here",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Visualizatiob 1: [Title Here]",
     "text": "Visualizatiob 1: [Title Here]\nDescribe what this plot shows, and why it’s important.\n\n\nCode\n# your code here"
   },
   {
     "objectID": "index.html#visualization-2-title-here",
     "href": "index.html#visualization-2-title-here",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Visualization 2: [Title Here]",
     "text": "Visualization 2: [Title Here]\nDescribe what this plot shows, and why it’s important.\n\n\nCode\n# your code here"
   },
   {
     "objectID": "index.html#visualization-3-title-here",
     "href": "index.html#visualization-3-title-here",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Visualization 3: [Title Here]",
     "text": "Visualization 3: [Title Here]\nDescribe what this plot shows, and why it’s important.\n\n\nCode\n# your code here"
   },
   {
     "objectID": "index.html#or-shiny-app-title-here",
     "href": "index.html#or-shiny-app-title-here",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "OR Shiny app: [Title Here]",
     "text": "OR Shiny app: [Title Here]\nIf you choose to create a Shiny app, describe the app’s purpose and functionality. Save your code inside the shiny-app/ folder, replace the URL below with your app’s URL\nClick here to open the interactive Shiny app"
   },
   {
     "objectID": "index.html#interpretation",
     "href": "index.html#interpretation",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Interpretation",
-    "text": "Interpretation\nSummarize your key findings. What do your visualizations reveal?"
+    "text": "Interpretation\nThrough our analysis of Superfund site wildfire risk, we found that there are substantial differences among areas of the country. By ranking EPA regions in our boxplot visualization, we were able to clearly see the differential distribution of fire risk. The Western United States generally had higher wildfire risk than other areas, with the lowest risk found in the Midwest and New England. This indicates that these regions may benefit most from proactive planning around Superfund site vulnerability. The distribution of media across the states also gives a sense of what exposure pathways researchers and risk managers might want to prioritize."
   },
   {
     "objectID": "index.html#limitations",
     "href": "index.html#limitations",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Limitations",
-    "text": "Limitations\nDiscuss any data quality or design limitations."
+    "text": "Limitations\nThough several Superfund sites exist in Puerto Rico, the Virgin Islands, and Guam, the wildfire data set was not complete for these areas. This is a limitation in projecting risk for island communities."
   },
   {
     "objectID": "index.html#conclusion",
     "href": "index.html#conclusion",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Conclusion",
     "text": "Conclusion\nWrap up your project with a takeaway message or next steps."
   },
   {
     "objectID": "index.html#references",
     "href": "index.html#references",
-    "title": "Final Project: [YOUR TITLE HERE]",
+    "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "References",
-    "text": "References\nInclude any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else’s work, cite those too.\n\nReference 1\nReference 2\nReference 3"
+    "text": "References\nhttps://science.nasa.gov/earth/explore/wildfires-and-climate-change/\nhttps://storymaps.arcgis.com/stories/340c1111e4d041da97d6ee23588c7b77\nhttps://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert.pdf\nInclude any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else’s work, cite those too.\n\nReference 1\nReference 2\nReference 3"
   }
 ]
