@@ -10,10 +10,22 @@ server <- function(input, output, session) {
 output$map <- renderLeaflet({
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>%
+    addMapPane("borderPane", zIndex = 420) %>%
     addMapPane("polygonPane", zIndex = 410) %>%
-    addMapPane("pointPane", zIndex = 420) %>%
-    setView(lng = -98.5795, lat = 39.8283, zoom = 4)
+    addMapPane("pointPane", zIndex = 430) %>%
+    setView(lng = -98.5795, lat = 39.8283, zoom = 4) %>%
+    addPolygons(
+      data = state_boundaries,
+      fill = FALSE,
+      color = "black",
+      weight = 1.5,
+      opacity = 1,
+      options = pathOptions(pane = "borderPane"),
+      group = "state_borders"
+    )
 })
+
+
   
   # Observe fire risk layer toggle
     observe({
@@ -42,7 +54,7 @@ output$map <- renderLeaflet({
           color = "#BDBDC3",
           weight = 1,
           group = "fire_risk",
-          options = pathOptions(pane = "polygonPane"),,
+          options = pathOptions(pane = "polygonPane"),
           popup = ~paste0(
             "<strong>County:</strong> ", NAME.y, "<br>",
             "<strong>State:</strong> ", STATE_NAME.y, "<br>",
@@ -69,6 +81,34 @@ output$map <- renderLeaflet({
         removeControl("fire_risk_legend")
     }
   })
+    
+  #Highlight states in selected EPA region
+    
+  observe({
+      proxy <- leafletProxy("map")
+      
+      # Always clear any previous highlight first
+      proxy %>% clearGroup("region_highlight")
+      
+      # If a specific region is selected, highlight its states
+      if (input$epa_region != "None") {
+        selected_states <- epa_regions[[input$epa_region]]
+        
+        region_sf <- state_boundaries %>%
+          filter( STUSPS %in% selected_states)
+        
+        proxy %>%
+          addPolygons(
+            data    = region_sf,
+            fill    = FALSE,
+            color   = "black",
+            weight  = 3,
+            opacity = 1,
+            options = pathOptions(pane = "borderPane"),
+            group   = "region_highlight"
+          )
+      }
+    })
   
   # Observe superfund sites layer toggle
   observe({
@@ -116,6 +156,48 @@ output$map <- renderLeaflet({
     }
   }) 
   
+  #RENDER BARCHART
+  
+  output$media_barplot <- renderPlot({
+    req(input$state != "" && !is.null(input$state))
+    
+    top_media_state <- top_media %>%
+      filter(State == input$state) %>%
+      mutate(Media = fct_other(
+        Media,
+        keep = c("Groundwater", "Soil", "Sediment", "Surface Water")
+      )) %>%
+      group_by(Media) %>%
+      summarise(Count = n(), .groups = "drop") %>%
+      arrange(desc(Count))
+    
+    ggplot(top_media_state, aes(x = reorder(Media, Count), y = Count, fill = Media)) +
+      geom_col(show.legend = FALSE) +
+      coord_flip() +
+      scale_fill_manual(
+        values = c(
+          "Groundwater"   = "#B10026",
+          "Soil"          = "#FC4E2A",
+          "Sediment"      = "#FEB24C",
+          "Surface Water" = "#FFFFB2",
+          "Other"         = "#BDBDC3"
+        )
+      ) +
+      labs(
+        title = paste("Contaminated Media Types in", input$state),
+        x     = "Media Type",
+        y     = "Number of Sites"
+      ) +
+      theme_minimal() +
+      theme(
+        plot.title         = element_text(face = "bold", size = 13),
+        axis.text          = element_text(size = 11),
+        axis.title         = element_text(size = 11),
+        panel.grid.major.y = element_blank()
+      )
+  })
+  
+  
   # Render the boxplot
   output$risk_boxplot <- renderPlotly({
     current_selection <- input$epa_region
@@ -136,7 +218,8 @@ output$map <- renderLeaflet({
           as.character(plot_data$Region) == selected_code,
           1, 0.3
         )
-      }
+    }
+    
    
     plot_data$tooltip <- paste0(plot_data$County, ", ", plot_data$State)
     p <- ggplot(plot_data, 

@@ -612,4 +612,17 @@ View(sf_HR_limited_R9_long)
 #sf_fire_map <- counties_fire_map %>%
 #left_join(sfdata, by = c("NAME.y" = "County"))
 
+top_media <- read_csv("data/SF_NPL_data.csv")%>%
+  #filter by NPL Status and Decision Document
+  filter(NPL_Status %in% "Currently on the Final NPL")%>%
+  filter(Decision_Document_Type %in% "Record of Decision") %>%
+  #remove duplicate media types and site names while keeping the original df
+  distinct(Site_Name, Media, .keep_all = TRUE) %>%
+  mutate(Media = fct_lump_n(Media, n=4)) %>%
+  group_by(Media) %>%
+  summarise(Count = n())%>%
+  arrange(desc(Count))
+
+
+
 
