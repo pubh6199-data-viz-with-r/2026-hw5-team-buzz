@@ -375,7 +375,7 @@ ggplot(counties_fire_sf_clean_pop, aes(x=RISK_NATIONAL_RANK, y=value, color=Stat
 View(counties_fire_sf_clean)
 
 counties_fire_sf_clean_HR <- counties_fire_sf_clean %>%
-  filter(RISK_NATIONAL_RANK >= 0.75)
+  filter(RISK_NATIONAL_RANK >= 0.8)
 
 unique(counties_fire_sf_clean_HR$County)
 
@@ -386,7 +386,7 @@ View(counties_fire_sf_clean_HR)
 library(dplyr)
 library(tidyr)
 
-sf_data_for_Risk <- read.csv("data/SF_NPL_data.csv") %>%
+sf_data_for_Risk <- read.csv("/Users/sharonhartzell/Data Visualization in R/2026-hw5-team-buzz/data/SF_NPL_data.csv") %>%
   #filter by NPL Status and Decision Document
   filter(NPL_Status %in% "Currently on the Final NPL")%>%
   filter(Decision_Document_Type %in% "Record of Decision") %>%
@@ -401,20 +401,26 @@ sf_data_for_Risk <- read.csv("data/SF_NPL_data.csv") %>%
   #remove rows with missing county name 
   drop_na(County) %>%
   filter(County %in% c("ALACHUA", "ALAMEDA", "ATLANTIC", "BAY", "BEAUFORT", "BENTON", "BERNALILLO", "BOULDER", "BRAZORIA", 
-         "BREVARD", "BROWARD", "BRUNSWICK", "BURLINGTON", "BUTLER", "BUTTE", "CADDO", "CALHOUN", "CAPE MAY", "CARIBOU",
-         "CARSON", "CHARLESTON", "CHAVES", "CIBOLA", "CLACKAMAS", "CLEAR CREEK", "COCHISE", "CONTRA COSTA", "COWLEY", 
-         "CREEK", "DAVIS", "DEER LODGE", "DOUGLAS", "DUVAL", "EAGLE", "ELMORE", "ESCAMBIA", "FAIRBANKS NORTH STAR","FAYETTE", 
-         "FREMONT", "FRESNO", "GALLATIN", "GALVESTON", "GEARY", "GLYNN", "GRANT", "HARLAN", "HARRISON", "HIDALGO", "HILLSBOROUGH", 
-         "HOCKLEY", "HONOLULU", "INDIAN RIVER", "JASPER", "JEFFERSON", "KERN", "KLAMATH", "LAKE", "LARAMIE", "LAWRENCE", 
-         "LEWIS AND CLARK", "LINCOLN", "LOS ANGELES", "LYON", "MARICOPA", "MARTIN", "MCCLAIN", "MENDOCINO", "MERCED", "MIAMI-DADE", 
-         "MINERAL", "MISSOULA", "MOBILE", "MONTEREY", "MONTGOMERY", "MONTROSE", "MORROW", "NEVADA", "NEW HANOVER", "OCEAN", 
-         "OCHILTREE", "ORANGE", "PALM BEACH", "PARKER", "PAYNE", "PENNINGTON", "PIMA", "POLK", "PUEBLO", "RENO", "RICHMOND", 
-         "RIO ARRIBA", "RIVERSIDE", "SACRAMENTO", "SALT LAKE", "SAN BERNARDINO", "SAN DIEGO", "SAN JOAQUIN", "SAN JUAN", 
-         "SANTA BARBARA", "SANTA CLARA", "SANTA CRUZ", "SANTA ROSA", "SEMINOLE", "SHASTA", "SHOSHONE", "SILVER BOW", "SISKIYOU", 
-         "SOCORRO", "SOLANO", "SPOKANE", "ST. TAMMANY", "STANISLAUS", "STEVENS", "SWISHER", "TAOS", "TOOELE", "VENTURA", "VOLUSIA", 
-         "WASCO", "WASHINGTON", "WEBER", "YAKIMA", "YAVAPAI", "YELLOWSTONE", "YOLO"))
+         "BREVARD", "BROWARD", "BURLINGTON", "BUTLER", "BUTTE", "CADDO", "CALHOUN", "CARIBOU",
+         "CARSON", "CHARLESTON", "CHAVES", "CLACKAMAS", "CLEAR CREEK", "COCHISE", "CONTRA COSTA", "COWLEY", 
+         "CREEK", "DAVIS", "DEER LODGE", "DOUGLAS", "ELMORE", "FAIRBANKS NORTH STAR BOROUGH", 
+         "FREMONT", "FRESNO", "GALLATIN", "GALVESTON", "GEARY", "GLYNN", "GRANT", "HARLAN", "HARRISON", "HILLSBOROUGH", 
+         "HOCKLEY", "HONOLULU", "INDIAN RIVER", "JEFFERSON", "KERN", "KLAMATH", "LAKE", "LAWRENCE", 
+         "LEWIS AND CLARK", "LINCOLN", "LOS ANGELES", "LYON", "MARTIN", "MCCLAIN", "MENDOCINO", "MERCED", "MIAMI-DADE", 
+         "MINERAL", "MISSOULA", "MOBILE", "MONTEREY", "MORROW", "NEVADA", "OCEAN", 
+         "OCHILTREE", "ORANGE", "PALM BEACH", "PARKER", "PAYNE", "PENNINGTON", "PIMA", "POLK", "PUEBLO", "RENO", 
+         "RIO ARRIBA", "RIVERSIDE", "SALT LAKE", "SAN BERNARDINO", "SAN DIEGO", "SAN JOAQUIN", 
+         "SANTA BARBARA", "SANTA CLARA", "SEMINOLE", "SHASTA", "SHOSHONE", "SILVER BOW", "SISKIYOU", 
+         "SOLANO", "SPOKANE", "ST. TAMMANY", "STANISLAUS", "STEVENS", "SWISHER", "TAOS", "TOOELE", "VENTURA", "VOLUSIA", 
+         "WASCO", "WEBER", "YAKIMA", "YAVAPAI", "YELLOWSTONE", "YOLO"))
   
 View(sf_data_for_Risk)
+
+View(sf_data_cleaned.csv)
+
+sf_data <- read.csv("/Users/sharonhartzell/Data Visualization in R/2026-hw5-team-buzz/data/SF_NPL_data_cleaned.csv")
+
+View(sf_data)
 
 
 #Joining counties_fire_sf_clean_HR with sf_data_for_Risk
@@ -625,4 +631,13 @@ top_media <- read_csv("data/SF_NPL_data.csv")%>%
 
 
 
+library(ggplot2)
+library(showtext)
 
+font_add_google("Ubuntu", "ubuntu")
+showtext_auto()
+
+ggplot(mtcars, aes(wt, mpg)) +
+  geom_point() +
+  theme_minimal(base_family = "ubuntu") +
+  labs(title = "Ubuntu Test")

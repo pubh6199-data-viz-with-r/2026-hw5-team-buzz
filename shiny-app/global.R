@@ -4,6 +4,9 @@ install.packages("leaflet")
 install.packages("tidycensus")
 install.packages("readxl")
 install.packages("plotly")
+install.packages("bslib")
+install.packages("shinythemes")
+install.packages("showtext")
 library(tidyverse)
 library(tmap)
 library(sf)
@@ -15,6 +18,16 @@ library(tidycensus)
 library(stringr)
 library(readxl)
 library(plotly)
+library(bslib)
+library(shinythemes)
+library(showtext)
+library(ggplot2)
+
+
+font_add_google("Ubuntu", "ubuntu")
+showtext_auto()
+print(font_families())
+
 
 
 #SUPERFUND DATA CLEANING

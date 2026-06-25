@@ -1,12 +1,13 @@
 # UI Definition
-ui <- fluidPage(
-  titlePanel("Fire Risk and Superfund Sites Map"),
+ui <- fluidPage(theme = shinytheme("united"),
+  titlePanel("Wildfires & Waste: Exploring Compound Environmental Hazards"),
   
   sidebarLayout(
     sidebarPanel(
+      style = "background-color: #FFE4C4;",
       width = 3,
-      h4("Map Controls"),
-      p("This map displays fire risk levels by county as a choropleth map with superfund sites overlaid as points."),
+      h4("Explore Wildfire Risk and Superfund Sites in Your Area"),
+      p("This map displays relative wildfire risk by county, defined as the percent risk that county faces compared with others nationwide. Superfund site locations are overlaid as points. Superfund sites are highly polluted locations that require cleanup strategies, and are regulated by the U.S. Environmental Protection Agency"),
       hr(),
       
       checkboxInput(
@@ -23,7 +24,7 @@ ui <- fluidPage(
       
       hr(),
       
-      h4("EPA Region Selection"),
+      h4("Region and State Selection"),
       selectInput(
         "epa_region",
         "Highlight EPA Region:",
@@ -38,44 +39,77 @@ ui <- fluidPage(
         selected = ""
       ),
       
-      h5("Legend"),
+      hr(),
+      
+      h4("Legend Details"),
       p(strong("Fire Risk:"), "Counties colored from yellow (low) to red (high)"),
       p(strong("Superfund Sites:"), "Blue markers indicate NPL site locations"),
       
       hr(),
       
-      h5("About the Data"),
-      p("Fire risk data from county-level fire dataset."),
-      p("Superfund sites are currently on the Final National Priorities (Superfund) List with Record of Decision.")
+      h4("About the Data"),
+      p("County-level fire risk data was obtained from the Wildfire Risk to Communities (WRC) website, maintained by the US Department of Agriculture Forest Service."),
+      p("Learn more about the data at", a("the WRC Web Page", href = "https://wildfirerisk.org/")),
+      p("Superfund site data was obtained from the US Environmental Protection Agency website. Superfund sites are currently on the Final National Priorities (Superfund) List with Record of Decision, indicating a cleanup plan is in place."),
+      p("Learn more about the data at", a("the EPA's Superfund Data Web Page", href = "https://www.epa.gov/superfund/superfund-data-and-reports")),
+      
+      hr(),
+      
+      h4("App Details"),
+      p("This app was created with coding assistance from", a("Shiny Assistant", href = "https://gallery.shinyapps.io/assistant/#"), "and", a("Claude.ai", href = "claude.ai")),
     ),
+    
     
     mainPanel(
       width = 9,
       fluidRow(
         column(
           width = 9,
+          h3(strong("Superfund Site Locations and Wildfire Risk By County")),
           leafletOutput("map", height = "500px")
         ),
           column(
             width = 3,
             wellPanel(
-              p("x% of Superfund sites are in high-risk areas")
+              style = "background-color: #F08080;",
+              p("281 Superfund sites, (24% of current sites on the National Priorities List, are in high fire risk areas", style = "font-size: 20px;")
             ),
             wellPanel(
-              p("fact 2"),
+              style = "background-color: #ADD8E6;",
+              p("EPA Region 9 (California, Nevada, Arizona, and Hawaii) has the highest median wildfire risk in the coutry.", style = "font-size: 20px;")
+            ), 
+            wellPanel(
+              style = "background-color: #FFFACD;",
+              p("Groundwater is the most frequently contaminated environmental media at Superfund sites, and should be prioritized in future wildfire research.", style = "font-size: 20px;")
             )
           )
         ),
       fluidRow(
         column(
           width = 6,
-          h4("Fire Risk National Rank by Region"),
-          plotlyOutput("risk_boxplot", height = "350px")
+          h3(strong("County Fire Risk by EPA Region")),
+          plotlyOutput("risk_boxplot", height = "400px")
         ),
         column(
+          h3(HTML("&nbsp;")),
           width =6, 
-          h5("Media Distribution by State"),
-          plotlyOutput("media_barplot", height = "350px"),
+          plotOutput("media_barplot", height = "400px"),
+        )
+      ),
+      fluidRow(
+        column(
+          width =6,
+          wellPanel(
+            style = "background-color: #FFE4C4;",
+            p("EPA Regions across the country show different wildfire risk profiles. In this plot, dots represent counties, and are sized based on the number of Superfund sites found in that county.")
+          )
+        ),
+        column(
+          width = 6,
+          wellPanel(
+            style = "background-color: #FFE4C4;",
+            p("Superfund sites contain different types of contaminated media that might be affected by natural disasters. Bars represent how often each type of contaminated media is found at sites.")
+          )
         )
       )
     )
