@@ -1,6 +1,5 @@
 # Server Logic
 server <- function(input, output, session) {
-  
   region_name_to_code <- setNames(
     sprintf("%02d", 1:10),
     names(epa_regions)
@@ -141,29 +140,53 @@ output$map <- renderLeaflet({
   })
  
   observeEvent(input$epa_region, {
+    message("epa_region: ", input$epa_region)
+    message("states: ", paste(epa_regions[[input$epa_region]], collapse=", "))
     if (input$epa_region == "") {
-      # If no region selected, show all states or empty
+       #If no region selected, show all states or empty
       updateSelectInput(session, "state", 
-                        choices = c("None" = ""),
-                        selected = "")
+                       choices = c("None" = ""),
+                       selected = "")
     } else {
-      # Get states for the selected EPA region
-      states_in_region <- epa_regions[[input$epa_region]]
+     #  Get states for the selected EPA region
+     states_in_region <- epa_regions[[input$epa_region]]
       
       updateSelectInput(session, "state",
                         choices = c("None" = "", states_in_region),
-                        selected = "")
+                       selected = "")
     }
   }) 
+
   
   #RENDER BARCHART
   
-  output$media_barplot <- renderPlot({
-    req(input$state != "" && !is.null(input$state))
-    
-    top_media_state <- top_media %>%
+    output$media_barplot <- renderPlot({
+      showtext_begin()
+      
+      if (is.null(input$state) || input$state == "") {
+        #Nationwide View
+        plot_data <- top_media %>%
+          mutate(Media = as.character(Media)) %>%
+          mutate(
+            Media = ifelse(Media == "Other", "Other (specified)", Media),
+            Media = fct_other(
+              Media,
+              keep = c("Groundwater", "Soil", "Sediment", "Surface Water")
+            )
+          ) %>%
+          group_by(Media) %>%
+          summarise(Count = n(), .groups = "drop") %>%
+          arrange(desc(Count))
+        
+        plot_title <- "Contaminated Media Types Nationwide"
+      } else {
+        #State View
+    plot_data <- top_media %>%
       filter(State == input$state) %>%
-      mutate(Media = fct_other(
+      mutate(Media = as.character(Media)) %>%
+      mutate(
+        Media = ifelse(Media == "Other", "Other (specified)", Media),
+        Media = fct_other(
         Media,
         keep = c("Groundwater", "Soil", "Sediment", "Surface Water")
       )) %>%
@@ -171,7 +194,21 @@ output$map <- renderLeaflet({
       summarise(Count = n(), .groups = "drop") %>%
       arrange(desc(Count))
     
-    ggplot(top_media_state, aes(x = reorder(Media, Count), y = Count, fill = Media)) +
+    if (nrow(plot_data) == 0){
+      return(
+        ggplot() +
+          annotate("text", x = 0.5, y = 0.5,
+                   label = paste("No Superfund site data available for", input$state),
+                   size = 5, color = "gray40") +
+          theme_void()
+      )
+    }
+    
+    plot_title <- paste("Contaminated Media Types in", input$state)
+      }
+     
+    
+      p <- ggplot(plot_data, aes(x = reorder(Media, Count), y = Count, fill = Media)) +
       geom_col(show.legend = FALSE) +
       coord_flip() +
       scale_fill_manual(
@@ -184,18 +221,23 @@ output$map <- renderLeaflet({
         )
       ) +
       labs(
-        title = paste("Contaminated Media Types in", input$state),
+        title = plot_title,
         x     = "Media Type",
         y     = "Number of Sites"
       ) +
-      theme_minimal() +
+      theme_classic(base_family = "ubuntu") +
       theme(
-        plot.title         = element_text(face = "bold", size = 13),
-        axis.text          = element_text(size = 11),
-        axis.title         = element_text(size = 11),
+        plot.title         = element_text(family = "ubuntu", size = 24),
+        axis.text          = element_text(family = "sans", size = 16),
+        axis.title         = element_text(family = "sans", size = 16),
         panel.grid.major.y = element_blank()
       )
-  })
+   
+   showtext_end()
+   p
+})
+  
+    
   
   
   # Render the boxplot
@@ -218,10 +260,25 @@ output$map <- renderLeaflet({
           as.character(plot_data$Region) == selected_code,
           1, 0.3
         )
-    }
+    } 
     
    
     plot_data$tooltip <- paste0(plot_data$County, ", ", plot_data$State)
+    
+    epa_region_labels <- c(
+      "01"  = "1",
+      "02"  = "2",
+      "03"  = "3",
+      "04"  = "4",
+      "05"  = "5",
+      "06"  = "6",
+      "07"  = "7",
+      "08"  = "8",
+      "09"  = "9",
+      "10" = "10"
+    )
+    
+    
     p <- ggplot(plot_data, 
            aes(x = Region, 
                y = RISK_NATIONAL_RANK)) +
@@ -243,16 +300,19 @@ output$map <- renderLeaflet({
         values = c("normal" = "black", "selected" = "black", "grayed" = "gray70")
       ) +
       scale_alpha_identity() +
+      scale_x_discrete(labels = epa_region_labels) +
       guides(fill = "none", color = "none", alpha = "none") +
       theme_classic() +
       labs(
         x = "EPA Region",
-        y = "Risk National Rank",
-        title = "Distribution of Fire Risk Rankings by Region"
+        y = "Risk National Rank"
       ) +
       theme(
-        axis.text.x = element_text(angle = 45, hjust = 1),
-        plot.title = element_text(size = 11, face = "bold"))
+        axis.text.x = element_text(size = 12, hjust = 1),
+        axis.text.y = element_text(size = 12),
+        plot.title = element_text(size = 15, face = "bold"),
+        axis.title.x = element_text(size = 12),
+        axis.title.y = element_text(size = 12))
      
      ggplotly(p, tooltip = "text")
   })
