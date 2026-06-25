@@ -74,8 +74,8 @@ ui <- fluidPage(
         ),
         column(
           width =6, 
-          h5("Media Distribution by Region"),
-          img(src ="84ea0001-b339-49e4-a4fb-4f95eb72a760.png", width = "100%", height = "350px", alt = "Placeholder Image")
+          h5("Media Distribution by State"),
+          plotlyOutput("media_barplot", height = "350px"),
         )
       )
     )

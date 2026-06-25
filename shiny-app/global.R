@@ -57,6 +57,11 @@ fire_counties <- fire_counties %>%
 
 options(tigris_use_cache = TRUE)
 
+#pull US state boundaries from tigris 
+
+state_boundaries <- states(cb = TRUE, resolution = "20m") %>%
+  st_transform(crs = 4326)
+
 #assigning counties to a dataframe
 counties <- tigris::counties(cb = TRUE, year = 2025) 
 
@@ -170,4 +175,14 @@ epa_regions <- list(
   "Region 9 - Pacific Southwest" = c("AZ", "CA", "HI", "NV"),
   "Region 10 - Pacific Northwest" = c("AK", "ID", "OR", "WA")
 )
+
+#find the top 5 contaminated media types in the country
+
+top_media <- read_csv("app-data/SF_NPL_data.csv")%>%
+
+  filter(NPL_Status %in% "Currently on the Final NPL")%>%
+  filter(Decision_Document_Type %in% "Record of Decision")%>%
+  distinct(Site_Name, Media, .keep_all = TRUE)
+
+
 
