@@ -40,7 +40,8 @@ knitr::opts_chunk$set(
 As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3
 
 ## Data
-
+Our first dataset is the EPA's Superfund site National Priority List (NPL). This is a CSV file that includes the site, location, EPA region, contaminated media, and the contaminant found at the site. This was originally in the long format with each row showing the contaminant. This was cleaned by removing the contaminant type for this analysis and collapsing the media column and concatenating the contaminated media type by site into one string. This set was processed into wide format so there is one observation per site and each site could be observed as one point on the map. 
+Our second dataset was the USDA Forest Service: Wildfire Risk to Communities. Wildfire risk only at the county level was extracted but this set contained risk on the state, community, and tribal area levels. This data contained the GEOID of the county so we were able to merge this dataset with the tigris state boundaries shapefiles in order to make our choropleth map and assess risk by EPA region.   
 _Describe your data source(s), including where it came from, the key variables, and any pre-processing steps._
 
 ```{r}
@@ -50,6 +51,9 @@ library(tidyverse)
 
 sfdata <- read_csv("data/SF_NPL_data.csv")
 glimpse(sfdata)
+
+fire_counties <- read_excel("data/fire_dataset.xlsx", sheet = "Counties")
+glimpse(fire_counties)
 ```   
 
 ## Visualizatiob 1: [Title Here]
@@ -76,7 +80,7 @@ _Describe what this plot shows, and why it's important._
 # your code here
 ```
 
-## OR Shiny app: [Title Here]
+## OR Shiny app: Wildfires & Waste: Exploring Compound Environmental Hazards
 
 _If you choose to create a Shiny app, describe the app's purpose and functionality. Save your code inside the shiny-app/ folder, replace the URL below with your app's URL_
 
@@ -92,7 +96,8 @@ Though several Superfund sites exist in Puerto Rico, the Virgin Islands, and Gua
 
 ## Conclusion
 
-_Wrap up your project with a takeaway message or next steps._
+By connecting these two datasets, we were able to effectively visualize which Superfund sites are highly threatened by wildfires. With global temperatures rising and wildfires becoming more prevalent, risk assessment needs to account for the increasing threat of unpredictable natural disasters such as wildfires. We hope our dashboard has communicated the importance of mitigating chemical contamination to communities in high wildfire risk zones. 
+
 
 ## References
 

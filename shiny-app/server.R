@@ -138,6 +138,8 @@ output$map <- renderLeaflet({
         clearGroup("superfund")
     }
   })
+  
+  # EPA Region drop down menu 
  
   observeEvent(input$epa_region, {
     message("epa_region: ", input$epa_region)
@@ -163,8 +165,10 @@ output$map <- renderLeaflet({
     output$media_barplot <- renderPlot({
       showtext_begin()
       
+ #Nationwide View if state is not selected
+      
       if (is.null(input$state) || input$state == "") {
-        #Nationwide View
+
         plot_data <- top_media %>%
           mutate(Media = as.character(Media)) %>%
           mutate(
@@ -179,8 +183,11 @@ output$map <- renderLeaflet({
           arrange(desc(Count))
         
         plot_title <- "Contaminated Media Types Nationwide"
+        
       } else {
-        #State View
+        
+  #State View once state is selected 
+        
     plot_data <- top_media %>%
       filter(State == input$state) %>%
       mutate(Media = as.character(Media)) %>%
@@ -238,9 +245,8 @@ output$map <- renderLeaflet({
 })
   
     
-  
-  
   # Render the boxplot
+    
   output$risk_boxplot <- renderPlotly({
     current_selection <- input$epa_region
     plot_data <- counties_fire_sf_clean
@@ -249,6 +255,9 @@ output$map <- renderLeaflet({
     if (current_selection == "") {
       plot_data$highlight <- "normal"
       plot_data$alpha_val <- 1 
+      
+  # Once EPA region is selected, highlight the region and gray the others 
+      
     } else {
         selected_code <- region_name_to_code[[current_selection]]
         
@@ -278,7 +287,7 @@ output$map <- renderLeaflet({
       "10" = "10"
     )
     
-    
+  #ggplot inputs with jitter function, change shape of dot for number of SF sites on county level
     p <- ggplot(plot_data, 
            aes(x = Region, 
                y = RISK_NATIONAL_RANK)) +
