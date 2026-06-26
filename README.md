@@ -13,7 +13,7 @@ This app aims to visualize the relationship between wildfire risk and Superfund 
 
 ## 📊 Final Write-up
 
-The final write-up, including code and interpretation of the visualizations, is available here.
+The final write-up, including code and interpretation of the visualizations, is available in the 2026-hw5-team-buzz/docs/index.html file.
 
 Visualization 1: This is a map layering Superfund sites on top of a choropleth map of wildfire risk by county. 
 The western region of the US has a higher number of high fire risk counties than the Eastern and Midwestern US. 
@@ -36,7 +36,7 @@ Our second data source is a wildfire risk dataset from the USDA Forest Service. 
 This set was merged with tigris county shapefiles for mapping.  
 
 
-👉 [**View the write-up website**](https://pubh6199-data-viz-with-r.github.io/hw6-YOUR-TEAM-NAME/)
+👉 [**View the write-up website**](https://pubh6199-data-viz-with-r.github.io/hw5-team-buzz/docs/index.html)
 
 ## 📂 Repository Structure
 

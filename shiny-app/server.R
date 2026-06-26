@@ -27,62 +27,64 @@ output$map <- renderLeaflet({
 
   
   # Observe fire risk layer toggle
-    observe({
-      if (input$show_fire_risk) {
-        # Create breaks in increments of 0.2
-        min_risk <- floor(min(counties_fire_map$RISK_NATIONAL_RANK, na.rm = TRUE) * 5) / 5
-        max_risk <- ceiling(max(counties_fire_map$RISK_NATIONAL_RANK, na.rm = TRUE) * 5) / 5
-        breaks <- seq(min_risk, max_risk, by = 0.2)
- 
-      # Explicitly define color palette for fire risk
-        breaks <- seq(0, 1, by = 0.2)
-        pal <- colorBin(
-          palette = c("#FFFFB2", "#FEB24C", "#FD8D3C", "#FC4E2A", "#B10026"),
-          domain = c(0, 1),
-          bins = breaks,
-          na.color = "#E0E0E0"
+observe({
+  if (input$show_fire_risk) {
+    
+    # Load only when toggled on
+    counties_fire_map <- readRDS("app-data/counties_fire_map.rds")
+    
+    min_risk <- floor(min(counties_fire_map$RISK_NATIONAL_RANK, na.rm = TRUE) * 5) / 5
+    max_risk <- ceiling(max(counties_fire_map$RISK_NATIONAL_RANK, na.rm = TRUE) * 5) / 5
+    breaks <- seq(0, 1, by = 0.2)
+    
+    pal <- colorBin(
+      palette = c("#FFFFB2", "#FEB24C", "#FD8D3C", "#FC4E2A", "#B10026"),
+      domain = c(0, 1),
+      bins = breaks,
+      na.color = "#E0E0E0"
+    )
+    
+    leafletProxy("map") %>%
+      clearGroup("fire_risk") %>%
+      addPolygons(
+        data = counties_fire_map,
+        fillColor = ~pal(RISK_NATIONAL_RANK),
+        fillOpacity = 0.6,
+        color = "#BDBDC3",
+        weight = 1,
+        group = "fire_risk",
+        options = pathOptions(pane = "polygonPane"),
+        popup = ~paste0(
+          "<strong>County:</strong> ", NAME.y, "<br>",
+          "<strong>State:</strong> ", STATE_NAME.y, "<br>",
+          "<strong>Risk Score:</strong> ", round(RISK_NATIONAL_RANK, 2), "<br>"
+        ),
+        highlightOptions = highlightOptions(
+          weight = 2,
+          color = "#666",
+          fillOpacity = 0.7,
+          bringToFront = TRUE
         )
-      
-      # Add fire risk choropleth layer by fire risk, specifying visual elements
-      leafletProxy("map") %>%
-        clearGroup("fire_risk") %>%
-        addPolygons(
-          data = counties_fire_map,
-          fillColor = ~pal(RISK_NATIONAL_RANK),
-          fillOpacity = 0.6,
-          color = "#BDBDC3",
-          weight = 1,
-          group = "fire_risk",
-          options = pathOptions(pane = "polygonPane"),
-         
-          #Adding tooltip popups 
-           popup = ~paste0(
-            "<strong>County:</strong> ", NAME.y, "<br>",
-            "<strong>State:</strong> ", STATE_NAME.y, "<br>",
-            "<strong>Risk Score:</strong> ", round(RISK_NATIONAL_RANK, 2), "<br>"
-          ),
-          highlightOptions = highlightOptions(
-            weight = 2,
-            color = "#666",
-            fillOpacity = 0.7,
-            bringToFront = TRUE
-          )
-        ) %>%
-        #Adding legend 
-        addLegend(
-          position = "bottomright",
-          pal = pal,
-          values = counties_fire_map$RISK_NATIONAL_RANK,
-          title = "Fire Risk Score",
-          layerId = "fire_risk_legend",
-          na.label = "No Data"
-        )
-    } else {
-      leafletProxy("map") %>%
-        clearGroup("fire_risk") %>%
-        removeControl("fire_risk_legend")
-    }
-  })
+      ) %>%
+      addLegend(
+        position = "bottomright",
+        pal = pal,
+        values = counties_fire_map$RISK_NATIONAL_RANK,
+        title = "Fire Risk Score",
+        layerId = "fire_risk_legend",
+        na.label = "No Data"
+      )
+    
+    # Free memory after rendering
+    rm(counties_fire_map)
+    gc()
+    
+  } else {
+    leafletProxy("map") %>%
+      clearGroup("fire_risk") %>%
+      removeControl("fire_risk_legend")
+  }
+})
     
   #Highlight states in selected EPA region
     
