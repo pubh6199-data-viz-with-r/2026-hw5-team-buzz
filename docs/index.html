@@ -4076,7 +4076,7 @@ vertical-align: -.125em;
   <li><a href="#visualizatiob-1-title-here" id="toc-visualizatiob-1-title-here" class="nav-link" data-scroll-target="#visualizatiob-1-title-here">Visualizatiob 1: [Title Here]</a></li>
   <li><a href="#visualization-2-title-here" id="toc-visualization-2-title-here" class="nav-link" data-scroll-target="#visualization-2-title-here">Visualization 2: [Title Here]</a></li>
   <li><a href="#visualization-3-title-here" id="toc-visualization-3-title-here" class="nav-link" data-scroll-target="#visualization-3-title-here">Visualization 3: [Title Here]</a></li>
-  <li><a href="#or-shiny-app-title-here" id="toc-or-shiny-app-title-here" class="nav-link" data-scroll-target="#or-shiny-app-title-here">OR Shiny app: [Title Here]</a></li>
+  <li><a href="#or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards" id="toc-or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards" class="nav-link" data-scroll-target="#or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards">OR Shiny app: Wildfires &amp; Waste: Exploring Compound Environmental Hazards</a></li>
   <li><a href="#interpretation" id="toc-interpretation" class="nav-link" data-scroll-target="#interpretation">Interpretation</a></li>
   <li><a href="#limitations" id="toc-limitations" class="nav-link" data-scroll-target="#limitations">Limitations</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
@@ -4120,11 +4120,12 @@ vertical-align: -.125em;
 
 <section id="introduction" class="level2">
 <h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3</p>
+<p>As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires(1). In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste(2). The United States Environmental Protection Agency’s Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites(3). From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the federal government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents(3). Nearby communities to Superfund sites already face potential exposures to legacy pollution, and without proper preparedness, these exposure pathways could be exacerbated by damage to site control mechanisms. By expanding beyond federal facilities to consider the full universe of Superfund sites in the nation, we build on this identified risk management gap.</p>
 </section>
 <section id="data" class="level2">
 <h2 class="anchored" data-anchor-id="data">Data</h2>
-<p><em>Describe your data source(s), including where it came from, the key variables, and any pre-processing steps.</em></p>
+<p>Our first dataset is the EPA’s Superfund site National Priority List (NPL). This is a CSV file that includes the site, location, EPA region, contaminated media, and the contaminant found at the site. This was originally in the long format with each row showing the contaminant. This was cleaned by removing the contaminant type for this analysis and collapsing the media column and concatenating the contaminated media type by site into one string. This set was processed into wide format so there is one observation per site and each site could be observed as one point on the map. Our second dataset was the USDA Forest Service: Wildfire Risk to Communities. Wildfire risk only at the county level was extracted but this set contained risk on the state, community, and tribal area levels. This data contained the GEOID of the county so we were able to merge this dataset with the tigris state boundaries shapefiles in order to make our choropleth map and assess risk by EPA region.<br>
+<em>Describe your data source(s), including where it came from, the key variables, and any pre-processing steps.</em></p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -4132,7 +4133,10 @@ vertical-align: -.125em;
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>sfdata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">&quot;data/SF_NPL_data.csv&quot;</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sfdata)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(sfdata)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>fire_counties <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">&quot;data/fire_dataset.xlsx&quot;</span>, <span class="at">sheet =</span> <span class="st">&quot;Counties&quot;</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(fire_counties)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 </section>
@@ -4166,8 +4170,8 @@ vertical-align: -.125em;
 </details>
 </div>
 </section>
-<section id="or-shiny-app-title-here" class="level2">
-<h2 class="anchored" data-anchor-id="or-shiny-app-title-here">OR Shiny app: [Title Here]</h2>
+<section id="or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards" class="level2">
+<h2 class="anchored" data-anchor-id="or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards">OR Shiny app: Wildfires &amp; Waste: Exploring Compound Environmental Hazards</h2>
 <p><em>If you choose to create a Shiny app, describe the app’s purpose and functionality. Save your code inside the shiny-app/ folder, replace the URL below with your app’s URL</em></p>
 <p><a href="https://cindyhu.shinyapps.io/two-files-app/">Click here to open the interactive Shiny app</a></p>
 </section>
@@ -4181,7 +4185,7 @@ vertical-align: -.125em;
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p><em>Wrap up your project with a takeaway message or next steps.</em></p>
+<p>By connecting these two datasets, we were able to effectively visualize which Superfund sites are highly threatened by wildfires. With global temperatures rising and wildfires becoming more prevalent, risk assessment needs to account for the increasing threat of unpredictable natural disasters such as wildfires. We hope our dashboard has communicated the importance of mitigating chemical contamination to communities in high wildfire risk zones.</p>
 </section>
 <section id="references" class="level2">
 <h2 class="anchored" data-anchor-id="references">References</h2>
@@ -4190,9 +4194,9 @@ vertical-align: -.125em;
 <p>https://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert.pdf</p>
 <p><em>Include any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else’s work, cite those too.</em></p>
 <ol type="1">
-<li>Reference 1</li>
-<li>Reference 2</li>
-<li>Reference 3</li>
+<li>EPA Superfund sites NPL List: https://www.epa.gov/superfund/current-npl-updates-new-proposed-npl-sites-and-new-npl-sites</li>
+<li>USDA Forest Service wildfire risk: https://wildfirerisk.org/download/</li>
+<li>EPA initiation of wildfire risk assessment at Superfund sites https://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert_glance.pdf</li>
 </ol>
 
 

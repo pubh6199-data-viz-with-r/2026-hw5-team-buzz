@@ -158,6 +158,17 @@ which(is.na(counties_fire_map), arr.ind = TRUE)
 #Checking join 
 view(counties_fire_map)
 
+library(tidyverse)
+
+# Read, remove columns, and overwrite the file
+counties_fire_map <- read_csv("counties_fire_map.csv") %>%
+  select(-COUNTYFP.x, -COUNTYNS.x, -NAMELSAD, -STATE_NAME.x, -LSAD, -GEOID.y, -STUSPS.y, -STATE_NAME.y, -STATEFP.y, -COUNTYNS.y, -TOTAL_BUILDINGS, -BUILDINGS_FRACTION_ME, -BUILDINGS_FRACTION_IE, -BUILDINGS_FRACTION_DE, -BP_STATE_RANK, -BP_NATIONAL_RANK, -RISK_STATE_RANK, -ALAND, -AWATER) %>%
+  write_csv(counties_fire_map, "counties_fire_map.csv")
+
+View(counties_fire_map)
+
+colnames(counties_fire_map)
+
 #First check of spatial join
 tm_shape(counties_fire_map, bbox = st_bbox(counties_fire_map)) +
   tm_polygons("RISK_NATIONAL_RANK", palette = "Oranges", title = "Fire Risk by County")

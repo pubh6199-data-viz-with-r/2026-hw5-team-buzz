@@ -5,7 +5,7 @@ server <- function(input, output, session) {
     names(epa_regions)
   )
   
-  # Create the base map
+  # Create the base map with Leaflet and modifying aesthetic elements, state boundaries, etc 
 output$map <- renderLeaflet({
   leaflet() %>%
     addProviderTiles(providers$CartoDB.Positron) %>%
@@ -43,7 +43,7 @@ output$map <- renderLeaflet({
           na.color = "#E0E0E0"
         )
       
-      # Add fire risk choropleth layer
+      # Add fire risk choropleth layer by fire risk, specifying visual elements
       leafletProxy("map") %>%
         clearGroup("fire_risk") %>%
         addPolygons(
@@ -54,7 +54,9 @@ output$map <- renderLeaflet({
           weight = 1,
           group = "fire_risk",
           options = pathOptions(pane = "polygonPane"),
-          popup = ~paste0(
+         
+          #Adding tooltip popups 
+           popup = ~paste0(
             "<strong>County:</strong> ", NAME.y, "<br>",
             "<strong>State:</strong> ", STATE_NAME.y, "<br>",
             "<strong>Risk Score:</strong> ", round(RISK_NATIONAL_RANK, 2), "<br>"
@@ -66,6 +68,7 @@ output$map <- renderLeaflet({
             bringToFront = TRUE
           )
         ) %>%
+        #Adding legend 
         addLegend(
           position = "bottomright",
           pal = pal,
@@ -126,7 +129,8 @@ output$map <- renderLeaflet({
           weight = 2,
           group = "superfund",
           options = pathOptions(pane = "pointPane"),
-          popup = ~paste0(
+         #Adding tooltip popups
+         popup = ~paste0(
             "<strong>Site:</strong> ", Site_Name, "<br>",
             #"<strong>County:</strong> ", County, "<br>",
             #"<strong>State:</strong> ", State, "<br>",
@@ -172,7 +176,7 @@ output$map <- renderLeaflet({
         plot_data <- top_media %>%
           mutate(Media = as.character(Media)) %>%
           mutate(
-            Media = ifelse(Media == "Other", "Other (specified)", Media),
+            Media = ifelse(Media == "Other", "Other (specified)", Media), #changing to distinguish newly created "other" from preexisting "other" category
             Media = fct_other(
               Media,
               keep = c("Groundwater", "Soil", "Sediment", "Surface Water")
@@ -182,7 +186,7 @@ output$map <- renderLeaflet({
           summarise(Count = n(), .groups = "drop") %>%
           arrange(desc(Count))
         
-        plot_title <- "Contaminated Media Types Nationwide"
+        plot_title <- "Contamination Nationwide"
         
       } else {
         
@@ -201,6 +205,7 @@ output$map <- renderLeaflet({
       summarise(Count = n(), .groups = "drop") %>%
       arrange(desc(Count))
     
+    #specifying display where there is no superfund data
     if (nrow(plot_data) == 0){
       return(
         ggplot() +
@@ -211,10 +216,11 @@ output$map <- renderLeaflet({
       )
     }
     
-    plot_title <- paste("Contaminated Media Types in", input$state)
+    #title responsive to what state is selected in inputs 
+    plot_title <- paste("Contamination in", input$state)
       }
      
-    
+    #plotting colors for different media categories
       p <- ggplot(plot_data, aes(x = reorder(Media, Count), y = Count, fill = Media)) +
       geom_col(show.legend = FALSE) +
       coord_flip() +
@@ -227,6 +233,7 @@ output$map <- renderLeaflet({
           "Other"         = "#BDBDC3"
         )
       ) +
+        #updating labels and fonts for streamlined appearance 
       labs(
         title = plot_title,
         x     = "Media Type",
@@ -245,19 +252,18 @@ output$map <- renderLeaflet({
 })
   
     
-  # Render the boxplot
-    
+  # Render the boxplots for all EPA regions 
   output$risk_boxplot <- renderPlotly({
     current_selection <- input$epa_region
     plot_data <- counties_fire_sf_clean
     plot_data$Region <- fct_reorder(plot_data$Region, plot_data$RISK_NATIONAL_RANK)
     
+    #establishing baseline appearance
     if (current_selection == "") {
       plot_data$highlight <- "normal"
       plot_data$alpha_val <- 1 
       
   # Once EPA region is selected, highlight the region and gray the others 
-      
     } else {
         selected_code <- region_name_to_code[[current_selection]]
         
@@ -271,9 +277,10 @@ output$map <- renderLeaflet({
         )
     } 
     
-   
+   #Adding tooltip so user can select county 
     plot_data$tooltip <- paste0(plot_data$County, ", ", plot_data$State)
     
+    #Changing region labels
     epa_region_labels <- c(
       "01"  = "1",
       "02"  = "2",
@@ -299,10 +306,11 @@ output$map <- renderLeaflet({
             color = highlight, 
             size = sf_count,
             text = tooltip), 
-        position = position_jitter(width = 0.15, height = 0, seed = 42) 
+        position = position_jitter(width = 0.15, height = 0, seed = 42) #jittering along x within box plot, not on y
         ) +
           scale_size_continuous(range = c(0.75, 3)) +
-      scale_fill_manual(
+      #setting colors for different cases
+      scale_fill_manual( 
         values = c("normal" = "steelblue", "selected" = "steelblue", "grayed" = "gray70")
       ) +
       scale_color_manual(
@@ -316,7 +324,8 @@ output$map <- renderLeaflet({
         x = "EPA Region",
         y = "Risk National Rank"
       ) +
-      theme(
+     #adjusting text and appearance 
+       theme(
         axis.text.x = element_text(size = 12, hjust = 1),
         axis.text.y = element_text(size = 12),
         plot.title = element_text(size = 15, face = "bold"),

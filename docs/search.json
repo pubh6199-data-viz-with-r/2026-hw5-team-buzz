@@ -4,21 +4,21 @@
     "href": "index.html",
     "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "",
-    "text": "As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3"
+    "text": "As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires(1). In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste(2). The United States Environmental Protection Agency’s Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites(3). From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the federal government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents(3). Nearby communities to Superfund sites already face potential exposures to legacy pollution, and without proper preparedness, these exposure pathways could be exacerbated by damage to site control mechanisms. By expanding beyond federal facilities to consider the full universe of Superfund sites in the nation, we build on this identified risk management gap."
   },
   {
     "objectID": "index.html#introduction",
     "href": "index.html#introduction",
     "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "",
-    "text": "As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires.1 In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste. The United States EPA Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites.2 From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the Federal Government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents.3"
+    "text": "As climate change shifts weather patterns around the globe, many parts of the United States are at increased risk from natural disasters, including wildfires(1). In addition to contributing to air pollution and causing property destruction, wildfires may play a role in mobilizing preexisting contamination in the environment, particularly at Superfund sites containing hazardous waste(2). The United States Environmental Protection Agency’s Inspector General has recommended that more attention should be paid to natural disaster risk at Superfund sites(3). From a preliminary study of 157 federal facilities around the country (Superfund sites owned by the federal government), they found that 20% of this subset of sites were at risk from wildfires, and only a third of those sites factored wildfire preparedness into their decision documents(3). Nearby communities to Superfund sites already face potential exposures to legacy pollution, and without proper preparedness, these exposure pathways could be exacerbated by damage to site control mechanisms. By expanding beyond federal facilities to consider the full universe of Superfund sites in the nation, we build on this identified risk management gap."
   },
   {
     "objectID": "index.html#data",
     "href": "index.html#data",
     "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Data",
-    "text": "Data\nDescribe your data source(s), including where it came from, the key variables, and any pre-processing steps.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\nsfdata &lt;- read_csv(\"data/SF_NPL_data.csv\")\nglimpse(sfdata)"
+    "text": "Data\nOur first dataset is the EPA’s Superfund site National Priority List (NPL). This is a CSV file that includes the site, location, EPA region, contaminated media, and the contaminant found at the site. This was originally in the long format with each row showing the contaminant. This was cleaned by removing the contaminant type for this analysis and collapsing the media column and concatenating the contaminated media type by site into one string. This set was processed into wide format so there is one observation per site and each site could be observed as one point on the map. Our second dataset was the USDA Forest Service: Wildfire Risk to Communities. Wildfire risk only at the county level was extracted but this set contained risk on the state, community, and tribal area levels. This data contained the GEOID of the county so we were able to merge this dataset with the tigris state boundaries shapefiles in order to make our choropleth map and assess risk by EPA region.\nDescribe your data source(s), including where it came from, the key variables, and any pre-processing steps.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\nsfdata &lt;- read_csv(\"data/SF_NPL_data.csv\")\nglimpse(sfdata)\n\nfire_counties &lt;- read_excel(\"data/fire_dataset.xlsx\", sheet = \"Counties\")\nglimpse(fire_counties)"
   },
   {
     "objectID": "index.html#visualizatiob-1-title-here",
@@ -42,11 +42,11 @@
     "text": "Visualization 3: [Title Here]\nDescribe what this plot shows, and why it’s important.\n\n\nCode\n# your code here"
   },
   {
-    "objectID": "index.html#or-shiny-app-title-here",
-    "href": "index.html#or-shiny-app-title-here",
+    "objectID": "index.html#or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards",
+    "href": "index.html#or-shiny-app-wildfires-waste-exploring-compound-environmental-hazards",
     "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
-    "section": "OR Shiny app: [Title Here]",
-    "text": "OR Shiny app: [Title Here]\nIf you choose to create a Shiny app, describe the app’s purpose and functionality. Save your code inside the shiny-app/ folder, replace the URL below with your app’s URL\nClick here to open the interactive Shiny app"
+    "section": "OR Shiny app: Wildfires & Waste: Exploring Compound Environmental Hazards",
+    "text": "OR Shiny app: Wildfires & Waste: Exploring Compound Environmental Hazards\nIf you choose to create a Shiny app, describe the app’s purpose and functionality. Save your code inside the shiny-app/ folder, replace the URL below with your app’s URL\nClick here to open the interactive Shiny app"
   },
   {
     "objectID": "index.html#interpretation",
@@ -67,13 +67,13 @@
     "href": "index.html#conclusion",
     "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "Conclusion",
-    "text": "Conclusion\nWrap up your project with a takeaway message or next steps."
+    "text": "Conclusion\nBy connecting these two datasets, we were able to effectively visualize which Superfund sites are highly threatened by wildfires. With global temperatures rising and wildfires becoming more prevalent, risk assessment needs to account for the increasing threat of unpredictable natural disasters such as wildfires. We hope our dashboard has communicated the importance of mitigating chemical contamination to communities in high wildfire risk zones."
   },
   {
     "objectID": "index.html#references",
     "href": "index.html#references",
     "title": "We Didn’t Start the Fire: Wildfire Risk at Superfund Sites in the United States",
     "section": "References",
-    "text": "References\nhttps://science.nasa.gov/earth/explore/wildfires-and-climate-change/\nhttps://storymaps.arcgis.com/stories/340c1111e4d041da97d6ee23588c7b77\nhttps://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert.pdf\nInclude any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else’s work, cite those too.\n\nReference 1\nReference 2\nReference 3"
+    "text": "References\nhttps://science.nasa.gov/earth/explore/wildfires-and-climate-change/\nhttps://storymaps.arcgis.com/stories/340c1111e4d041da97d6ee23588c7b77\nhttps://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert.pdf\nInclude any references to data sources, packages, or literature you used. If your visualization design is inspired by someone else’s work, cite those too.\n\nEPA Superfund sites NPL List: https://www.epa.gov/superfund/current-npl-updates-new-proposed-npl-sites-and-new-npl-sites\nUSDA Forest Service wildfire risk: https://wildfirerisk.org/download/\nEPA initiation of wildfire risk assessment at Superfund sites https://www.epa.gov/system/files/documents/2026-03/_epaoig_20260325-26-e-0020_cert_glance.pdf"
   }
 ]

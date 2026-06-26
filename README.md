@@ -13,7 +13,7 @@ This app aims to visualize the relationship between wildfire risk and Superfund 
 
 ## 📊 Final Write-up
 
-The final write-up, including code and interpretation of the visualizations, is available here:
+The final write-up, including code and interpretation of the visualizations, is available here.
 
 Visualization 1: This is a map layering Superfund sites on top of a choropleth map of wildfire risk by county. 
 The western region of the US has a higher number of high fire risk counties than the Eastern and Midwestern US. 
@@ -76,7 +76,7 @@ shiny::runApp("shiny-app")
 
 If your project includes a Shiny app, you can access it here:
 
-👉 [https://yourusername.shinyapps.io/your-app-name](https://yourusername.shinyapps.io/your-app-name)
+👉 [https://6ybexz-abigail-schmitt.shinyapps.io/shiny-app/](https://6ybexz-abigail-schmitt.shinyapps.io/shiny-app/)
 
 ## 📦 Packages Used
 
@@ -84,8 +84,20 @@ If your project includes a Shiny app, you can access it here:
 - `ggplot2`
 - `quarto`
 - `shiny` (if applicable)
+- `tmap`
+-`tigris`
+- `leaflet`
+- `tidycensus`
+- `readxl`
+- `plotly`
+- `bslib`
+- `shinythemes`
+- `showtext`
+
 
 ## ✅ To-Do or Known Issues
+
+Prototype Update: 
 
 For our prototype V1 we have drop down menus for user interaction for EPA region and states within that region. 
 These menus are only in our UI and have not yet been integrated into our server so they are not reactive to the visualizations yet.
@@ -96,3 +108,6 @@ to show a horizontal barchart of the ranked contaminated media types by state.
 
 We also need to add more context to our dashboard through explicit labeling, colors, and explanation of the data since this information is not yet adapted to a lay audience. 
 We plan on changing the theme to make it more visually appealing. 
+
+
+Final Update: We would like to add more data on contamination, and explore adding population and demographic layers to the map

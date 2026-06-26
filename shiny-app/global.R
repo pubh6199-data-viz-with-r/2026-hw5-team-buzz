@@ -23,7 +23,10 @@ library(shinythemes)
 library(showtext)
 library(ggplot2)
 
+#Loading above packages to facilitate plotting and visual redesign
 
+
+#Adding ubuntu font to streamline visualization appearances
 font_add_google("Ubuntu", "ubuntu")
 showtext_auto()
 print(font_families())
@@ -89,7 +92,6 @@ counties_fire_map <- counties %>%
 
 #change map projection for counties to match sf site projections
 counties_fire_map <- st_transform(counties_fire_map, crs = 4326)
-
 
 
 # PLOT 2 WORK: Resource: https://rpubs.com/snijesh/quadrant-plots
