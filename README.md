@@ -76,7 +76,7 @@ shiny::runApp("shiny-app")
 
 If your project includes a Shiny app, you can access it here:
 
-👉 [https://6ybexz-abigail-schmitt.shinyapps.io/shiny-app/](https://6ybexz-abigail-schmitt.shinyapps.io/shiny-app/)
+👉 [https://sehartzell.shinyapps.io/sf_fire_risk_app/](https://sehartzell.shinyapps.io/sf_fire_risk_app/)
 
 ## 📦 Packages Used
 
@@ -110,4 +110,7 @@ We also need to add more context to our dashboard through explicit labeling, col
 We plan on changing the theme to make it more visually appealing. 
 
 
-Final Update: We would like to add more data on contamination, and explore adding population and demographic layers to the map
+Final Update: We would like to add more data on contamination, and explore adding population and demographic layers to the map. 
+We have noticed that the app sometimes crashes after loading, though this was improved by saving the census files 
+to the data folder as .rds and removing the repeated call to get tigris shapefiles, which seemed to be hanging up the app. The app is also 
+slow to load. We had to switch to having the Superfund and fire layers turned off at loading to prevent it from crashing. 

@@ -1,0 +1,10 @@
+name: sf_fire_app
+title: sf_fire_app
+username: sehartzell
+account: sehartzell
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 17555730
+bundleId: 12183689
+url: https://sehartzell.shinyapps.io/sf_fire_app/
+version: 1

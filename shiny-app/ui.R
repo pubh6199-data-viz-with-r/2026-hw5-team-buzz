@@ -15,13 +15,13 @@ ui <- fluidPage(theme = shinytheme("united"), #Setting theme, titles
       checkboxInput(
         "show_fire_risk",
         "Show Fire Risk Layer",
-        value = TRUE
+        value = FALSE
       ),
       
       checkboxInput(
         "show_superfund",
         "Show Superfund Sites",
-        value = TRUE
+        value = FALSE
       ),
       
       #spacing

@@ -21,7 +21,7 @@ output$map <- renderLeaflet({
       opacity = 1,
       options = pathOptions(pane = "borderPane"),
       group = "state_borders"
-    )
+    ) 
 })
 
 
@@ -167,7 +167,7 @@ output$map <- renderLeaflet({
   #RENDER BARCHART
   
     output$media_barplot <- renderPlot({
-      showtext_begin()
+     
       
  #Nationwide View if state is not selected
       
@@ -239,15 +239,14 @@ output$map <- renderLeaflet({
         x     = "Media Type",
         y     = "Number of Sites"
       ) +
-      theme_classic(base_family = "ubuntu") +
+      theme_classic() +
       theme(
-        plot.title         = element_text(family = "ubuntu", size = 24),
-        axis.text          = element_text(family = "sans", size = 16),
-        axis.title         = element_text(family = "sans", size = 16),
+        plot.title         = element_text(size = 24),
+        axis.text          = element_text(size = 16),
+        axis.title         = element_text(size = 16),
         panel.grid.major.y = element_blank()
       )
    
-   showtext_end()
    p
 })
   

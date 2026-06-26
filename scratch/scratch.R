@@ -131,6 +131,21 @@ library(leaflet)
 
 options(tigris_use_cache = TRUE)
 
+
+library(tigris)
+library(sf)
+
+state_boundaries <- states(cb = TRUE, resolution = "20m") %>%
+  st_transform(crs = 4326)
+saveRDS(state_boundaries, "app-data/state_boundaries.rds")
+
+counties <- tigris::counties(cb = TRUE, year = 2025) %>%
+  filter(!STATEFP %in% "78") %>%
+  mutate(NAME = toupper(NAME))
+saveRDS(counties, "app-data/counties.rds")
+
+
+
 #assigning counties to a dataframe, removing VI and mutating names
 counties <- tigris::counties(cb = TRUE, year = 2025) %>%
   filter(STATEFP != "78") %>%
