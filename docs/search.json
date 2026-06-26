@@ -21,11 +21,11 @@
     "text": "Data\nOur first dataset is the EPA’s Superfund National Priorities List (NPL). (4) This is a CSV file that includes the site, location, EPA region, contaminated media, and the contaminants found at the site. This was originally in the long format with each row showing the contaminant. This was cleaned by removing the contaminant type for this analysis, collapsing the media column, and concatenating the contaminated media type by site into one string. This set was processed into wide format so there is one observation per site and each site could be observed as one point on the map. For the bar chart visualization, media types were expanded into wide format to obtain frequency counts.\nOur second dataset was the USDA Forest Service: Wildfire Risk to Communities. (5) Wildfire risk only at the county level was extracted, but this set contained risk on the state, community, and tribal area levels. This data contained the GEOID of the county so could be merged with the tigris state boundaries shapefiles in order to make our choropleth map and assess risk by EPA region. It was a more complex process to merge this data file with the Superfund file, which did not have a GEOID, because many county names had to be cleaned in order for the join to work. One data gap in this set was the fact that Puerto Rico, the Virgin Islands, and the Pacific Islands did not have fire risk data, so while their Superfund sites are presented in the visualization, fire risk is not.\nThe risk value used in this data set was the national RPS percentile within the US. The RPS value denotes Risk to Potential Structures, which measures the hypothetical danger to a structure on any given plot of land. (5) We selected this value to be able to do nationwide comparisons, and because the potential damage to infrastructure is a particularly relevant measure for the type of risks that we are evaluating.\n\n\nCode\n# Load libraries and data\nlibrary(tidyverse)\n\nsfdata &lt;- read_csv(\"data/SF_NPL_data.csv\")\nglimpse(sfdata)\n\nfire_counties &lt;- read_excel(\"data/fire_dataset.xlsx\", sheet = \"Counties\")\nglimpse(fire_counties)"
   },
   {
-    "objectID": "index.html#visualizatiob-1-title-here",
-    "href": "index.html#visualizatiob-1-title-here",
+    "objectID": "index.html#visualization-1-title-here",
+    "href": "index.html#visualization-1-title-here",
     "title": "Wildfire Risk at Superfund Sites in the United States",
-    "section": "Visualizatiob 1: [Title Here]",
-    "text": "Visualizatiob 1: [Title Here]\nDescribe what this plot shows, and why it’s important.\n\n\nCode\n# your code here"
+    "section": "Visualization 1: [Title Here]",
+    "text": "Visualization 1: [Title Here]\nDescribe what this plot shows, and why it’s important.\n\n\nCode\n# your code here"
   },
   {
     "objectID": "index.html#visualization-2-title-here",
