@@ -667,3 +667,38 @@ ggplot(mtcars, aes(wt, mpg)) +
   geom_point() +
   theme_minimal(base_family = "ubuntu") +
   labs(title = "Ubuntu Test")
+
+#Downsizing SF file
+library(tidyverse)
+raw_sf <- read_csv("app-data/SF_NPL_data.csv")
+
+sfdata <- raw_sf %>%
+  filter(NPL_Status %in% "Currently on the Final NPL") %>%
+  filter(Decision_Document_Type %in% "Record of Decision") %>%
+  distinct(Site_Name, Media, .keep_all = TRUE) %>%
+  group_by(Site_Name) %>%
+  mutate(Media_Types = toString(Media)) %>%
+  select(-Media, -Contaminant) %>%
+  distinct(Latitude, Longitude, .keep_all = TRUE) %>%
+  drop_na(County)
+saveRDS(sfdata, "app-data/sfdata.rds")
+
+top_media <- raw_sf %>%
+  filter(NPL_Status %in% "Currently on the Final NPL") %>%
+  filter(Decision_Document_Type %in% "Record of Decision") %>%
+  distinct(Site_Name, Media, .keep_all = TRUE)
+saveRDS(top_media, "app-data/top_media.rds")
+
+
+# install.packages("rmapshaper")
+install.packages("rmapshaper")
+library(rmapshaper)
+
+counties_fire_map_simplified <- ms_simplify(counties_fire_map, keep = 0.05, keep_shapes = TRUE)
+object.size(counties_fire_map_simplified) |> format(units = "MB")
+saveRDS(counties_fire_map_simplified, "app-data/counties_fire_map.rds")
+
+library(rmapshaper)
+counties_fire_map_simplified <- ms_simplify(counties_fire_map, keep = 0.02, keep_shapes = TRUE)
+object.size(counties_fire_map_simplified) |> format(units = "MB")
+saveRDS(counties_fire_map_simplified, "app-data/counties_fire_map.rds")

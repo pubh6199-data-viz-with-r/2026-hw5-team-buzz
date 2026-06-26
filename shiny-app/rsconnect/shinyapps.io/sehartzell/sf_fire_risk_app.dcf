@@ -5,7 +5,7 @@ account: sehartzell
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 17555746
-bundleId: 12184410
+bundleId: 12185699
 url: https://sehartzell.shinyapps.io/sf_fire_risk_app/
 version: 1
 asMultiple: FALSE
