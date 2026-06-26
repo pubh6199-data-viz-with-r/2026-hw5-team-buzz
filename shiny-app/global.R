@@ -1,12 +1,11 @@
-install.packages("tmap") 
-install.packages("tigris")
-install.packages("leaflet")
-install.packages("tidycensus")
-install.packages("readxl")
-install.packages("plotly")
-install.packages("bslib")
-install.packages("shinythemes")
-install.packages("showtext")
+#install.packages("tmap") 
+#install.packages("tigris")
+#install.packages("leaflet")
+#install.packages("tidycensus")
+#install.packages("readxl")
+#install.packages("plotly")
+#install.packages("bslib")
+#install.packages("shinythemes")
 library(tidyverse)
 library(tmap)
 library(sf)
@@ -20,22 +19,15 @@ library(readxl)
 library(plotly)
 library(bslib)
 library(shinythemes)
-library(showtext)
 library(ggplot2)
 
 #Loading above packages to facilitate plotting and visual redesign
 
-
-#Adding ubuntu font to streamline visualization appearances
-font_add_google("Ubuntu", "ubuntu")
-showtext_auto()
-print(font_families())
-
-
-
 #SUPERFUND DATA CLEANING
 
-sfdata <- read_csv("app-data/SF_NPL_data.csv")%>%
+raw_sf <- read_csv("app-data/SF_NPL_data.csv")
+  
+  sfdata <- raw_sf %>%
   #filter by NPL Status and Decision Document
   filter(NPL_Status %in% "Currently on the Final NPL")%>%
   filter(Decision_Document_Type %in% "Record of Decision") %>%
@@ -71,23 +63,23 @@ fire_counties <- fire_counties %>%
   mutate(NAME = str_remove(NAME, " COUNTY")) %>%
   mutate(COUNTYFP = as.character(COUNTYFP))
 
-options(tigris_use_cache = TRUE)
 
-#pull US state boundaries from tigris 
-
-state_boundaries <- states(cb = TRUE, resolution = "20m") %>%
-  st_transform(crs = 4326)
-
-#assigning counties to a dataframe
-counties <- tigris::counties(cb = TRUE, year = 2025) 
+#Reading state and county boundary files, pulled from tigris in scratch 
+state_boundaries <- readRDS("app-data/state_boundaries.rds")
+counties <- readRDS("app-data/counties.rds")
 
 #changing county names to all upper case and removing VI
 counties <- counties %>%
   filter(!STATEFP %in% "78") %>%
   mutate(NAME = toupper(NAME))
 
+#Fetch simplified cartographic county boundaries 
+counties_sf <- counties(cb = TRUE) 
+# Simplify the polygons (adjust dTolerance for more or less smoothing) 
+counties_simplified <- st_simplify(counties_sf, dTolerance = 1000)
+
 #Left join of fire and county shapefiles 
-counties_fire_map <- counties %>%
+counties_fire_map <- counties_simplified%>%
   left_join(fire_counties, by = ("GEOIDFQ" = "GEOIDFQ"))
 
 #change map projection for counties to match sf site projections
@@ -193,11 +185,11 @@ epa_regions <- list(
 
 #find the top 5 contaminated media types in the country
 
-top_media <- read_csv("app-data/SF_NPL_data.csv")%>%
+top_media <- raw_sf %>%
 
   filter(NPL_Status %in% "Currently on the Final NPL")%>%
   filter(Decision_Document_Type %in% "Record of Decision")%>%
   distinct(Site_Name, Media, .keep_all = TRUE)
 
-
-
+rm(raw_sf)
+gc()
