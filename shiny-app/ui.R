@@ -1,8 +1,9 @@
 # UI Definition
-ui <- fluidPage(theme = shinytheme("united"),
+ui <- fluidPage(theme = shinytheme("united"), #Setting theme, titles 
   titlePanel("Wildfires & Waste: Exploring Compound Environmental Hazards"),
   
-  sidebarLayout(
+  #Establishing left sidebar layout, color, and text 
+  sidebarLayout( 
     sidebarPanel(
       style = "background-color: #FFE4C4;",
       width = 3,
@@ -10,6 +11,7 @@ ui <- fluidPage(theme = shinytheme("united"),
       p("This map displays relative wildfire risk by county, defined as the percent risk that county faces compared with others nationwide. Superfund site locations are overlaid as points. Superfund sites are highly polluted locations that require cleanup strategies, and are regulated by the U.S. Environmental Protection Agency"),
       hr(),
       
+      #Input checkboxes for visualizing map layers 
       checkboxInput(
         "show_fire_risk",
         "Show Fire Risk Layer",
@@ -22,8 +24,10 @@ ui <- fluidPage(theme = shinytheme("united"),
         value = TRUE
       ),
       
+      #spacing
       hr(),
       
+      #Input dropdowns for Regions and State
       h4("Region and State Selection"),
       selectInput(
         "epa_region",
@@ -59,7 +63,7 @@ ui <- fluidPage(theme = shinytheme("united"),
       p("This app was created with coding assistance from", a("Shiny Assistant", href = "https://gallery.shinyapps.io/assistant/#"), "and", a("Claude.ai", href = "claude.ai")),
     ),
     
- #Label for map    
+ #Label for map - establishing main panel size   
     mainPanel(
       width = 9,
       fluidRow(
@@ -68,20 +72,20 @@ ui <- fluidPage(theme = shinytheme("united"),
           h3(strong("Superfund Site Locations and Wildfire Risk By County")),
           leafletOutput("map", height = "500px")
         ),
- #Card with important statistics and interpretations
+ #Cards with important statistics and interpretations
           column(
             width = 3,
             wellPanel(
               style = "background-color: #F08080;",
-              p("281 Superfund sites, (24% of current sites on the National Priorities List, are in high fire risk areas", style = "font-size: 20px;")
+              p("281 Superfund sites, or 24% of sites, are in high fire risk areas.", style = "font-size: 18px;")
             ),
             wellPanel(
               style = "background-color: #ADD8E6;",
-              p("EPA Region 9 (California, Nevada, Arizona, and Hawaii) has the highest median wildfire risk in the coutry.", style = "font-size: 20px;")
+              p("EPA Region 9 (California, Nevada, Arizona, and Hawaii) has the highest median wildfire risk in the country.", style = "font-size: 18px;")
             ), 
             wellPanel(
               style = "background-color: #FFFACD;",
-              p("Groundwater is the most frequently contaminated environmental media at Superfund sites, and should be prioritized in future wildfire research.", style = "font-size: 20px;")
+              p("Groundwater is the most frequently contaminated environmental media at Superfund sites, and should be prioritized in future wildfire research.", style = "font-size: 18px;")
             )
           )
         ),
@@ -92,9 +96,9 @@ ui <- fluidPage(theme = shinytheme("united"),
           h3(strong("County Fire Risk by EPA Region")),
           plotlyOutput("risk_boxplot", height = "400px")
         ),
- #Titel and placement of barchart
+ #Title and placement of barchart
         column(
-          h3(HTML("&nbsp;")),
+          h5(HTML("&nbsp;")),
           width =6, 
           plotOutput("media_barplot", height = "400px"),
         )
@@ -102,18 +106,20 @@ ui <- fluidPage(theme = shinytheme("united"),
  #Explanation of boxplot below 
       fluidRow(
         column(
+          h5(HTML("&nbsp;")),
           width =6,
           wellPanel(
             style = "background-color: #FFE4C4;",
-            p("EPA Regions across the country show different wildfire risk profiles. In this plot, dots represent counties, and are sized based on the number of Superfund sites found in that county.")
+            p("EPA Regions across the country show different wildfire risk profiles. In this plot, dots represent counties, and are sized based on the number of Superfund sites found in that county.", style = "font-size: 16px;")
           )
         ),
  #Explanation of barchart 
         column(
+          h5(HTML("&nbsp;")),
           width = 6,
           wellPanel(
             style = "background-color: #FFE4C4;",
-            p("Superfund sites contain different types of contaminated media that might be affected by natural disasters. Bars represent how often each type of contaminated media is found at sites.")
+            p("Superfund sites contain different types of contaminated media that might be affected by natural disasters. Bars represent how often each type of contaminated media is found at sites.", style = "font-size: 16px;")
           )
         )
       )
