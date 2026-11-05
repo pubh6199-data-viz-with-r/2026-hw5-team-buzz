@@ -8,7 +8,7 @@ server <- function(input, output, session) {
   # Create the base map with Leaflet and modifying aesthetic elements, state boundaries, etc 
 output$map <- renderLeaflet({
   leaflet() %>%
-    addProviderTiles(providers$CartoDB.Positron) %>%
+    addProviderTiles(providers$Esri.WorldGrayCanvas) %>%
     addMapPane("borderPane", zIndex = 420) %>%
     addMapPane("polygonPane", zIndex = 410) %>%
     addMapPane("pointPane", zIndex = 430) %>%
